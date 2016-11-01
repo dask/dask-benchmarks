@@ -1,0 +1,6 @@
+*.pyc
+*.asv/
+
+# Project repos
+dask/dask/
+distributed/distributed/
