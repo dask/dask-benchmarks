@@ -40,7 +40,7 @@ class CSVSuite(object):
     def teardown_cache(self):
         shutil.rmtree(self.data_dir)
 
-    def time_read_meta(self, get):
+    def time_read_csv_meta(self, get):
         return dd.read_csv('{}/*.csv'.format(self.data_dir))
 
     def time_read_csv(self, get):
@@ -65,9 +65,9 @@ class HDF5Suite(object):
     def teardown_cache(self):
         shutil.rmtree(self.data_dir)
 
-    def time_read_meta(self, get):
-        return dd.read_hdf('{}/*.hdf5'.format(self.data_dir), 'key')
+    def time_read_hdf5_meta(self, get):
+        dd.read_hdf('{}/*.hdf5'.format(self.data_dir), 'key')
 
     def time_read_hdf5(self, get):
-        return (dd.read_hdf('{}/*.hdf5'.format(self.data_dir), 'key')
-                  .compute(get=get))
+        (dd.read_hdf('{}/*.hdf5'.format(self.data_dir), 'key')
+           .compute(get=get))
