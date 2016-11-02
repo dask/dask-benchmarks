@@ -62,6 +62,10 @@ class HDF5Suite(object):
             df.to_hdf('{}/{}.hdf5'.format(self.data_dir, i), 'key',
                       format='table')
 
+    def setup(self, get):
+        if get is dask.multiprocessing.get:
+            raise NotImplementedError()
+
     def teardown_cache(self):
         shutil.rmtree(self.data_dir)
 
