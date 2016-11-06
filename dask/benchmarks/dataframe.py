@@ -1,3 +1,5 @@
+import string
+
 import dask
 import dask.dataframe as dd
 import numpy as np
@@ -41,3 +43,68 @@ class MemoryDataFrameSuite(object):
 
     def test_quantile(self):
         self.data.quantile(.25).compute()
+
+
+class TimeFloatConstructors(object):
+
+    def setup(self):
+        self.floats = np.random.randn(10000, 10)
+        self.wide_floats = np.random.randn(10000, 1000)
+        self.floats_pandas = pd.DataFrame(self.floats)
+        self.wide_floats_pandas = pd.DataFrame(self.wide_floats)
+
+    def time_floats(self):
+        dd.from_array(self.floats)
+
+    def time_wide_floats(self):
+        dd.from_array(self.wide_floats)
+
+    def time_floats_pandas(self):
+        dd.from_pandas(self.floats_pandas, npartitions=2)
+
+    def time_wide_floats_pandas(self):
+        dd.from_pandas(self.wide_floats_pandas, npartitions=2)
+
+
+class TimeIntConstructors(object):
+
+    def setup(self):
+        self.ints = np.random.randint(0, 100, size=(10000, 10))
+        self.wide_ints = np.random.randint(0, 100, size=(10000, 1000))
+        self.ints_pandas = pd.DataFrame(self.ints)
+        self.wide_ints_pandas = pd.DataFrame(self.wide_ints)
+
+    def time_ints(self):
+        dd.from_array(self.ints)
+
+    def time_wide_ints(self):
+        dd.from_array(self.wide_ints)
+
+    def time_ints_pandas(self):
+        dd.from_pandas(self.ints_pandas, npartitions=2)
+
+    def time_wide_ints_pandas(self):
+        dd.from_pandas(self.wide_ints_pandas, npartitions=2)
+
+
+class TimeObjectConstructors(object):
+
+    def setup(self):
+        self.text = np.random.choice(list(string.ascii_letters),
+                                     size=(10000, 10))
+        self.wide_text = np.random.choice(list(string.ascii_letters),
+                                          size=(10000, 1000))
+        self.text_pandas = pd.DataFrame(self.text)
+        self.wide_text_pandas = pd.DataFrame(self.wide_text)
+
+    def time_text(self):
+        dd.from_array(self.text)
+
+    def time_wide_text(self):
+        dd.from_array(self.wide_text)
+
+    def time_text_pandas(self):
+        dd.from_pandas(self.text_pandas, npartitions=2)
+
+    def time_wide_text_pandas(self):
+        dd.from_pandas(self.wide_text_pandas, npartitions=2)
