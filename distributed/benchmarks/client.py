@@ -1,8 +1,10 @@
 from distributed import Client
+
 from dask import delayed
 
 
 class ClientSuite(object):
+
     def setup(self):
         self.client = Client()
         """
@@ -21,12 +23,16 @@ class ClientSuite(object):
         loop.run_sync(start)
         """
 
-    def time_inc(self):
+    def time_trivial_tasks(self):
+        """
+        Measure scheduler and communication overhead by running
+        a bunch of unrelated trivial tasks.
+        """
         @delayed(pure=True)
         def inc(x):
             return x + 1
 
-        L = [inc(i) for i in range(5000)]
+        L = [inc(i) for i in range(500)]
         total = delayed(sum, pure=True)(L)
 
         total.compute(get=self.client.get)
