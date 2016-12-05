@@ -60,8 +60,7 @@
         "pandas": [],
         "distributed": [],
         "s3fs": [],
-        "tables": [null, ""],
-        "pytables": [null, ""]
+        "pytables": []
     },
 
     // Combinations of libraries/python versions can be excluded/included
@@ -85,10 +84,10 @@
     //     Platform, as in sys.platform. Possible values for the common
     //     cases: 'linux2', 'win32', 'cygwin', 'darwin'.
     //
-    "exclude": [
-        {"environment_type": "conda", "tables": ""},
-        {"environment_type": "virtualenv", "pytables": ""}
-    ],
+    // "exclude": [
+    //     {"python": "3.2", "sys_platform": "win32"}, // skip py3.2 on windows
+    //     {"environment_type": "conda", "six": null}, // don't run without six on conda
+    // ],
     //
     // "include": [
     //     // additional env for python2.7
