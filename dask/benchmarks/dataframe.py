@@ -4,19 +4,22 @@ import numpy as np
 import pandas as pd
 
 
-class MemoryDataFrameSuite(object):
+from .common import DaskSuite, rnd
 
-    goal_time = 0.2
+
+class MemoryDataFrame(DaskSuite):
+    N = 10000000
 
     def setup(self):
-        N = 10000000
-        df = pd.DataFrame(np.random.randn(N, 2), columns=list('ab'))
-        df['c'] = np.random.randint(0, 500, size=(N,))
-        a = dd.from_pandas(df, npartitions=5)
-        self.data = a
+        r = rnd()
+        df = pd.DataFrame(r.randn(self.N, 2), columns=list('ab'))
+        df['c'] = r.randint(0, 500, size=(self.N,))
+        self.data = dd.from_pandas(df, npartitions=5)
+        self.smaller_data = dd.from_pandas(df[:self.N // 10],
+                                           npartitions=5)
 
     def time_set_index(self):
-        self.data.set_index('a').compute()
+        self.smaller_data.set_index('a').compute()
 
     def time_count_values(self):
         self.data.c.value_counts().compute()
