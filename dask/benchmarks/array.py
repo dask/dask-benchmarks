@@ -6,20 +6,34 @@ from .common import DaskSuite, rnd
 
 class Rechunk(DaskSuite):
 
-    N = 20
+    SMALL_N = 20
+    MEDIUM_N = 80
 
     def setup(self):
-        a = rnd().random_sample((self.N, self.N))
-        self.z = da.from_array(a, chunks=(self.N, 1))
+        small = rnd().random_sample((self.SMALL_N, self.SMALL_N))
+        medium = rnd().random_sample((self.MEDIUM_N, self.MEDIUM_N))
+        self.small = da.from_array(small, chunks=(small.shape[0], 1))
+        self.medium = da.from_array(medium, chunks=(medium.shape[0], 1))
+
+    def _rechunks(self, shape):
+        m, n = shape
+        assert m == n
+        yield (1, n)
+        yield (n, 1)
+        yield (1, n)
+        yield (n, 1)
+        yield (1, n)
 
     def time_rechunk(self):
-        z = self.z
-        z = z.rechunk((1, self.N))
-        z = z.rechunk((self.N, 1))
-        z = z.rechunk((1, self.N))
-        z = z.rechunk((self.N, 1))
-        z = z.rechunk((1, self.N))
+        z = self.small
+        for r in self._rechunks(z.shape):
+            z = z.rechunk(r)
         z.compute()
+
+    def time_rechunk_meta(self):
+        z = self.medium
+        for r in self._rechunks(z.shape):
+            z = z.rechunk(r)
 
 
 class FancyIndexing(DaskSuite):
