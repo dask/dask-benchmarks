@@ -1,0 +1,202 @@
+[
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.13584158200000007,
+        "name": "array.ArraySuite.time_cull",
+        "pretty_name": "array.ArraySuite.time_cull",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.353719428,
+        "name": "array.ArraySuite.time_fancy",
+        "pretty_name": "array.ArraySuite.time_fancy",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.23288341700000004,
+        "name": "dataframe.MemoryDataFrameSuite.time_boolean_indexing",
+        "pretty_name": "dataframe.MemoryDataFrameSuite.time_boolean_indexing",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.145876801,
+        "name": "dataframe.MemoryDataFrameSuite.time_count_values",
+        "pretty_name": "dataframe.MemoryDataFrameSuite.time_count_values",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.844462933,
+        "name": "dataframe.MemoryDataFrameSuite.time_groupby",
+        "pretty_name": "dataframe.MemoryDataFrameSuite.time_groupby",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.7176705970000006,
+        "name": "dataframe.MemoryDataFrameSuite.time_reduction",
+        "pretty_name": "dataframe.MemoryDataFrameSuite.time_reduction",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.08907525299999985,
+        "name": "dataframe.MemoryDataFrameSuite.time_scalar_comparison",
+        "pretty_name": "dataframe.MemoryDataFrameSuite.time_scalar_comparison",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": null,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 5.5568614830000005,
+        "name": "dataframe.MemoryDataFrameSuite.time_set_index",
+        "pretty_name": "dataframe.MemoryDataFrameSuite.time_set_index",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 0,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.26541569500000006,
+        "name": "io.CSVSuite.time_read_csv",
+        "pretty_name": "io.CSVSuite.time_read_csv(<function get_sync at 0x7ff61f52e8c8>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 1,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.4421851640000001,
+        "name": "io.CSVSuite.time_read_csv",
+        "pretty_name": "io.CSVSuite.time_read_csv(<function get at 0x7ff611431ea0>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 2,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.6488015270000003,
+        "name": "io.CSVSuite.time_read_csv",
+        "pretty_name": "io.CSVSuite.time_read_csv(<function get at 0x7ff61ba8cae8>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 0,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.029220390799999996,
+        "name": "io.CSVSuite.time_read_csv_meta",
+        "pretty_name": "io.CSVSuite.time_read_csv_meta(<function get_sync at 0x7ff61f52e8c8>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 1,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.028675592500000003,
+        "name": "io.CSVSuite.time_read_csv_meta",
+        "pretty_name": "io.CSVSuite.time_read_csv_meta(<function get at 0x7ff611431ea0>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 2,
+        "last_err": 0.0,
+        "last_rev": 5415,
+        "last_value": 0.029232949899999992,
+        "name": "io.CSVSuite.time_read_csv_meta",
+        "pretty_name": "io.CSVSuite.time_read_csv_meta(<function get at 0x7ff61ba8cae8>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 0,
+        "last_err": null,
+        "last_rev": null,
+        "last_value": null,
+        "name": "io.HDF5Suite.time_read_hdf5",
+        "pretty_name": "io.HDF5Suite.time_read_hdf5(<function get_sync at 0x7ff61f52e8c8>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 1,
+        "last_err": null,
+        "last_rev": null,
+        "last_value": null,
+        "name": "io.HDF5Suite.time_read_hdf5",
+        "pretty_name": "io.HDF5Suite.time_read_hdf5(<function get at 0x7ff611431ea0>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 2,
+        "last_err": null,
+        "last_rev": null,
+        "last_value": null,
+        "name": "io.HDF5Suite.time_read_hdf5",
+        "pretty_name": "io.HDF5Suite.time_read_hdf5(<function get at 0x7ff61ba8cae8>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 0,
+        "last_err": null,
+        "last_rev": null,
+        "last_value": null,
+        "name": "io.HDF5Suite.time_read_hdf5_meta",
+        "pretty_name": "io.HDF5Suite.time_read_hdf5_meta(<function get_sync at 0x7ff61f52e8c8>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 1,
+        "last_err": null,
+        "last_rev": null,
+        "last_value": null,
+        "name": "io.HDF5Suite.time_read_hdf5_meta",
+        "pretty_name": "io.HDF5Suite.time_read_hdf5_meta(<function get at 0x7ff611431ea0>)",
+        "prev_value": null
+    },
+    {
+        "change_rev": null,
+        "idx": 2,
+        "last_err": null,
+        "last_rev": null,
+        "last_value": null,
+        "name": "io.HDF5Suite.time_read_hdf5_meta",
+        "pretty_name": "io.HDF5Suite.time_read_hdf5_meta(<function get at 0x7ff61ba8cae8>)",
+        "prev_value": null
+    }
+]
