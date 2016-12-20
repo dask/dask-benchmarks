@@ -1,0 +1,327 @@
+{
+    "benchmarks": {
+        "array.FancyIndexing.time_fancy": {
+            "code": "def time_fancy(self):\n    self.a[self.c][:, self.s]\n",
+            "goal_time": 2.0,
+            "name": "array.FancyIndexing.time_fancy",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "array.FancyIndexing.time_fancy",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "array.Rechunk.time_rechunk": {
+            "code": "def time_rechunk(self):\n    z = self.small\n    for r in self._rechunks(z.shape):\n        z = z.rechunk(r)\n    z.compute()\n",
+            "goal_time": 2.0,
+            "name": "array.Rechunk.time_rechunk",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "array.Rechunk.time_rechunk",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "array.Rechunk.time_rechunk_meta": {
+            "code": "def time_rechunk_meta(self):\n    z = self.medium\n    for r in self._rechunks(z.shape):\n        z = z.rechunk(r)\n",
+            "goal_time": 2.0,
+            "name": "array.Rechunk.time_rechunk_meta",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "array.Rechunk.time_rechunk_meta",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "dataframe.MemoryDataFrame.time_boolean_indexing": {
+            "code": "def time_boolean_indexing(self):\n    self.data[(self.data.a > 0) & (self.data.b > 0)].compute()\n",
+            "goal_time": 2.0,
+            "name": "dataframe.MemoryDataFrame.time_boolean_indexing",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "dataframe.MemoryDataFrame.time_boolean_indexing",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "dataframe.MemoryDataFrame.time_count_values": {
+            "code": "def time_count_values(self):\n    self.data.c.value_counts().compute()\n",
+            "goal_time": 2.0,
+            "name": "dataframe.MemoryDataFrame.time_count_values",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "dataframe.MemoryDataFrame.time_count_values",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "dataframe.MemoryDataFrame.time_groupby": {
+            "code": "def time_groupby(self):\n    self.data.groupby('c').agg(['mean', 'max', 'min']).compute()\n",
+            "goal_time": 2.0,
+            "name": "dataframe.MemoryDataFrame.time_groupby",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "dataframe.MemoryDataFrame.time_groupby",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "dataframe.MemoryDataFrame.time_reduction": {
+            "code": "def time_reduction(self):\n    self.data.reduction(np.max).compute()\n",
+            "goal_time": 2.0,
+            "name": "dataframe.MemoryDataFrame.time_reduction",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "dataframe.MemoryDataFrame.time_reduction",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "dataframe.MemoryDataFrame.time_scalar_comparison": {
+            "code": "def time_scalar_comparison(self):\n    (self.data.a > 0).compute()\n",
+            "goal_time": 2.0,
+            "name": "dataframe.MemoryDataFrame.time_scalar_comparison",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "dataframe.MemoryDataFrame.time_scalar_comparison",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "dataframe.MemoryDataFrame.time_set_index": {
+            "code": "def time_set_index(self):\n    self.smaller_data.set_index('a').compute()\n",
+            "goal_time": 2.0,
+            "name": "dataframe.MemoryDataFrame.time_set_index",
+            "number": 0,
+            "param_names": [],
+            "params": [],
+            "pretty_name": "dataframe.MemoryDataFrame.time_set_index",
+            "repeat": 0,
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "io.CSV.time_read_csv": {
+            "code": "def time_read_csv(self, get):\n    return dd.read_csv('{}/*.csv'.format(self.data_dir)).compute(get=get)\n",
+            "goal_time": 2.0,
+            "name": "io.CSV.time_read_csv",
+            "number": 0,
+            "param_names": [
+                "param1"
+            ],
+            "params": [
+                [
+                    "<function get_sync at 0x7fdf05ebe950>",
+                    "<function get at 0x7fdef54ab488>",
+                    "<function get at 0x7fdf0241db70>"
+                ]
+            ],
+            "pretty_name": "io.CSV.time_read_csv",
+            "repeat": 0,
+            "setup_cache_key": "/home/ec2-user/dask-benchmarks/dask/benchmarks/io.py:34",
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "io.CSV.time_read_csv_meta": {
+            "code": "def time_read_csv_meta(self, get):\n    return dd.read_csv('{}/*.csv'.format(self.data_dir))\n",
+            "goal_time": 2.0,
+            "name": "io.CSV.time_read_csv_meta",
+            "number": 0,
+            "param_names": [
+                "param1"
+            ],
+            "params": [
+                [
+                    "<function get_sync at 0x7fdf05ebe950>",
+                    "<function get at 0x7fdef54ab488>",
+                    "<function get at 0x7fdf0241db70>"
+                ]
+            ],
+            "pretty_name": "io.CSV.time_read_csv_meta",
+            "repeat": 0,
+            "setup_cache_key": "/home/ec2-user/dask-benchmarks/dask/benchmarks/io.py:34",
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "io.HDF5.time_read_hdf5": {
+            "code": "def time_read_hdf5(self, get):\n    (dd.read_hdf('{}/*.hdf5'.format(self.data_dir), 'key')\n       .compute(get=get))\n",
+            "goal_time": 2.0,
+            "name": "io.HDF5.time_read_hdf5",
+            "number": 0,
+            "param_names": [
+                "param1"
+            ],
+            "params": [
+                [
+                    "<function get_sync at 0x7fdf05ebe950>",
+                    "<function get at 0x7fdef54ab488>",
+                    "<function get at 0x7fdf0241db70>"
+                ]
+            ],
+            "pretty_name": "io.HDF5.time_read_hdf5",
+            "repeat": 0,
+            "setup_cache_key": "/home/ec2-user/dask-benchmarks/dask/benchmarks/io.py:57",
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        },
+        "io.HDF5.time_read_hdf5_meta": {
+            "code": "def time_read_hdf5_meta(self, get):\n    dd.read_hdf('{}/*.hdf5'.format(self.data_dir), 'key')\n",
+            "goal_time": 2.0,
+            "name": "io.HDF5.time_read_hdf5_meta",
+            "number": 0,
+            "param_names": [
+                "param1"
+            ],
+            "params": [
+                [
+                    "<function get_sync at 0x7fdf05ebe950>",
+                    "<function get at 0x7fdef54ab488>",
+                    "<function get at 0x7fdf0241db70>"
+                ]
+            ],
+            "pretty_name": "io.HDF5.time_read_hdf5_meta",
+            "repeat": 0,
+            "setup_cache_key": "/home/ec2-user/dask-benchmarks/dask/benchmarks/io.py:57",
+            "timeout": 60.0,
+            "type": "time",
+            "unit": "seconds"
+        }
+    },
+    "graph_param_list": [],
+    "hash_length": 8,
+    "machines": {},
+    "pages": [
+        [
+            "",
+            "Grid view",
+            "Display as a agrid"
+        ],
+        [
+            "summarylist",
+            "List view",
+            "Display as a list"
+        ],
+        [
+            "regressions",
+            "Show regressions",
+            "Display information about recent regressions"
+        ]
+    ],
+    "params": {
+        "branch": [
+            "master"
+        ]
+    },
+    "project": "dask",
+    "project_url": "http://dask.pydata.org/",
+    "revision_to_date": {
+        "140": 1422492229000,
+        "353": 1423879976000,
+        "361": 1424199997000,
+        "367": 1424201084000,
+        "372": 1424202387000,
+        "374": 1424203472000,
+        "473": 1425592496000,
+        "947": 1429561707000,
+        "1259": 1431727875000,
+        "1882": 1435693855000,
+        "2168": 1437593619000,
+        "2548": 1439580565000,
+        "2728": 1441377911000,
+        "2964": 1443202278000,
+        "2965": 1443207002000,
+        "3052": 1445555788000,
+        "3063": 1445741449000,
+        "3341": 1452024865000,
+        "3543": 1455660388000,
+        "3621": 1457718554000,
+        "3749": 1460564411000,
+        "3948": 1462920584000,
+        "4190": 1465836609000,
+        "4359": 1468275351000,
+        "4502": 1469564298000,
+        "4680": 1471522831000,
+        "4873": 1475807863000,
+        "5157": 1478271076000
+    },
+    "revision_to_hash": {
+        "140": "e9bf7d6c1b87f5e8c58868d643692d2010bcc460",
+        "353": "2460d340fdf839a5215f258c74c73b2be78ee27c",
+        "361": "a549824d8b1c668ffa9e24e8aac9dc9a2d3af92a",
+        "367": "69071341825b1a7cad14f4e4f366256d487ca847",
+        "372": "30280407ff4e2c47fb4bbd6860e806cd8312f09b",
+        "374": "af03c7c7d7cc5e06701fd2f5153008f367ed99fe",
+        "473": "55b46913b27d60d4375cf018563e0e6921780307",
+        "947": "5d563a656ec22b6168e267ba89baecec5c82ec26",
+        "1259": "6be07186495facc1921864ecc44568a1ce8036dc",
+        "1882": "d9e9c87c23c4159a3963fc83182371c42fdd0b5e",
+        "2168": "0bbb78a902a8f7289f0106a8eba961551f0e1c67",
+        "2548": "26e4981b48038e068791d40da391225187e7a3b3",
+        "2728": "522a275eece104c220bb47db079a374ef5e86f0f",
+        "2964": "dee2d9e9b1d7c32dfde1e44cf64f7bbb22b2c61e",
+        "2965": "752eb60b0a41e98b71e0c98485cbf7f1f2ded749",
+        "3052": "2366677c5e0fa6fb0bcc0e3f8c0ec66c1522d569",
+        "3063": "672978e3905534fcddc64a8ab7db13c4658e4c6c",
+        "3341": "232e3ba615a227796f5d77a28fc16230bf7c500a",
+        "3543": "9b49a0bb7d451199bf93a8473761acc5cfbcabf6",
+        "3621": "cf5a6599fbd6269b67792842fc38e0b4dbbb778f",
+        "3749": "7f398f2a00e23b105790b6aca4edc6816379089b",
+        "3948": "c32645581e406398f2cb5414a591c618df66179b",
+        "4190": "43aed4aa87e0d454a2e92862e647fd5ff5d76d87",
+        "4359": "fcd2f24054bc050ac73b33f77b8fa9f0ae567466",
+        "4502": "bf376da278292d157d33564a52ef5e409e92bfc3",
+        "4680": "34e1751483596c33a24f594516e840da11866b4e",
+        "4873": "ab9b0006d059bb592894cc61af597c6b9de3f3b5",
+        "5157": "c1ee730a3131c72e84832248712fd28e8ae54637"
+    },
+    "show_commit_url": "#",
+    "tags": {
+        "0.10.0": 4190,
+        "0.10.1": 4359,
+        "0.10.2": 4502,
+        "0.11.0": 4680,
+        "0.11.1": 4873,
+        "0.12.0": 5157,
+        "0.2.0": 140,
+        "0.2.1": 353,
+        "0.2.2": 361,
+        "0.2.3": 367,
+        "0.2.5": 372,
+        "0.2.6": 374,
+        "0.3.0": 473,
+        "0.4.0": 947,
+        "0.5.0": 1259,
+        "0.6.0": 1882,
+        "0.6.1": 2168,
+        "0.7.0": 2548,
+        "0.7.1": 2728,
+        "0.7.2": 2964,
+        "0.7.3": 2965,
+        "0.7.4": 3052,
+        "0.7.5": 3063,
+        "0.7.6": 3341,
+        "0.8.0": 3543,
+        "0.8.1": 3621,
+        "0.8.2": 3749,
+        "0.9.0": 3948
+    }
+}
