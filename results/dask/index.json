@@ -127,9 +127,9 @@
             ],
             "params": [
                 [
-                    "<function get_sync at 0x7fdf05ebe950>",
-                    "<function get at 0x7fdef54ab488>",
-                    "<function get at 0x7fdf0241db70>"
+                    "<function get_sync at 0x7f80974d4950>",
+                    "<function get at 0x7f8086abf488>",
+                    "<function get at 0x7f8093a32b70>"
                 ]
             ],
             "pretty_name": "io.CSV.time_read_csv",
@@ -149,9 +149,9 @@
             ],
             "params": [
                 [
-                    "<function get_sync at 0x7fdf05ebe950>",
-                    "<function get at 0x7fdef54ab488>",
-                    "<function get at 0x7fdf0241db70>"
+                    "<function get_sync at 0x7f80974d4950>",
+                    "<function get at 0x7f8086abf488>",
+                    "<function get at 0x7f8093a32b70>"
                 ]
             ],
             "pretty_name": "io.CSV.time_read_csv_meta",
@@ -171,9 +171,9 @@
             ],
             "params": [
                 [
-                    "<function get_sync at 0x7fdf05ebe950>",
-                    "<function get at 0x7fdef54ab488>",
-                    "<function get at 0x7fdf0241db70>"
+                    "<function get_sync at 0x7f80974d4950>",
+                    "<function get at 0x7f8086abf488>",
+                    "<function get at 0x7f8093a32b70>"
                 ]
             ],
             "pretty_name": "io.HDF5.time_read_hdf5",
@@ -193,9 +193,9 @@
             ],
             "params": [
                 [
-                    "<function get_sync at 0x7fdf05ebe950>",
-                    "<function get at 0x7fdef54ab488>",
-                    "<function get at 0x7fdf0241db70>"
+                    "<function get_sync at 0x7f80974d4950>",
+                    "<function get at 0x7f8086abf488>",
+                    "<function get at 0x7f8093a32b70>"
                 ]
             ],
             "pretty_name": "io.HDF5.time_read_hdf5_meta",
@@ -206,9 +206,53 @@
             "unit": "seconds"
         }
     },
-    "graph_param_list": [],
+    "graph_param_list": [
+        {
+            "arch": "x86_64",
+            "branch": "master",
+            "cloudpickle": "",
+            "cpu": "Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz",
+            "distributed": "",
+            "machine": "aws-ec2-c4.xlarge",
+            "numpy": "",
+            "os": "Linux 3.10.0-514.el7.x86_64",
+            "pandas": "",
+            "partd": "",
+            "pytables": "",
+            "python": "3.5",
+            "ram": "7.5GB",
+            "s3fs": "",
+            "toolz": ""
+        },
+        {
+            "arch": "x86_64",
+            "branch": "master",
+            "cloudpickle": "",
+            "cpu": "Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz",
+            "distributed": "",
+            "machine": "aws-ec2-c4.xlarge",
+            "numpy": "",
+            "os": "Linux 3.10.0-514.el7.x86_64",
+            "pandas": "",
+            "partd": "",
+            "pytables": "",
+            "python": "2.7",
+            "ram": "7.5GB",
+            "s3fs": "",
+            "toolz": ""
+        }
+    ],
     "hash_length": 8,
-    "machines": {},
+    "machines": {
+        "aws-ec2-c4.xlarge": {
+            "arch": "x86_64",
+            "cpu": "Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz",
+            "machine": "aws-ec2-c4.xlarge",
+            "os": "Linux 3.10.0-514.el7.x86_64",
+            "ram": "7.5GB",
+            "version": 1
+        }
+    },
     "pages": [
         [
             "",
@@ -227,8 +271,51 @@
         ]
     ],
     "params": {
+        "arch": [
+            "x86_64"
+        ],
         "branch": [
             "master"
+        ],
+        "cloudpickle": [
+            ""
+        ],
+        "cpu": [
+            "Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz"
+        ],
+        "distributed": [
+            ""
+        ],
+        "machine": [
+            "aws-ec2-c4.xlarge"
+        ],
+        "numpy": [
+            ""
+        ],
+        "os": [
+            "Linux 3.10.0-514.el7.x86_64"
+        ],
+        "pandas": [
+            ""
+        ],
+        "partd": [
+            ""
+        ],
+        "pytables": [
+            ""
+        ],
+        "python": [
+            "2.7",
+            "3.5"
+        ],
+        "ram": [
+            "7.5GB"
+        ],
+        "s3fs": [
+            ""
+        ],
+        "toolz": [
+            ""
         ]
     },
     "project": "dask",
@@ -257,11 +344,31 @@
         "3749": 1460564411000,
         "3948": 1462920584000,
         "4190": 1465836609000,
+        "4255": 1466638891000,
+        "4304": 1467043244000,
+        "4357": 1468273982000,
         "4359": 1468275351000,
+        "4450": 1469223005000,
         "4502": 1469564298000,
+        "4532": 1470137929000,
+        "4595": 1470852152000,
+        "4666": 1471459089000,
         "4680": 1471522831000,
+        "4701": 1471956403000,
+        "4759": 1473420606000,
+        "4795": 1474651474000,
+        "4826": 1475499859000,
+        "4864": 1475782964000,
         "4873": 1475807863000,
-        "5157": 1478271076000
+        "4901": 1476309566000,
+        "4956": 1476792316000,
+        "5022": 1477498224000,
+        "5073": 1477921789000,
+        "5157": 1478271076000,
+        "5166": 1478434514000,
+        "5269": 1479745424000,
+        "5341": 1480531809000,
+        "5415": 1481905432000
     },
     "revision_to_hash": {
         "140": "e9bf7d6c1b87f5e8c58868d643692d2010bcc460",
@@ -287,11 +394,31 @@
         "3749": "7f398f2a00e23b105790b6aca4edc6816379089b",
         "3948": "c32645581e406398f2cb5414a591c618df66179b",
         "4190": "43aed4aa87e0d454a2e92862e647fd5ff5d76d87",
+        "4255": "0f896927c4541cc70226e5fc946520f6225cde7b",
+        "4304": "5068149628ed59d7a2ed7d125e3fb1cddf6fd7ef",
+        "4357": "2e465c64128c0ffcdcc1682370df7f326949e1da",
         "4359": "fcd2f24054bc050ac73b33f77b8fa9f0ae567466",
+        "4450": "1d86f08a222e0340629b555bb4658c45c514fceb",
         "4502": "bf376da278292d157d33564a52ef5e409e92bfc3",
+        "4532": "98ff5337a612d8cd443fb10a287418c0c036d375",
+        "4595": "0f0eb180d9994e7492c280a00b1db017094457f9",
+        "4666": "4d888e8e66fb2f83d4b0f8c3e2df22f14e9eaa7e",
         "4680": "34e1751483596c33a24f594516e840da11866b4e",
+        "4701": "27b977d0ba6319ed495d767a590497fa1c5dfd1e",
+        "4759": "5ff63a8675fd6e9a0f9e409db0de788aca0067a3",
+        "4795": "8b12ddb66c1d91786d9fa8a57c293ea295a40fe4",
+        "4826": "f5173c38c70073c96a9cfcc7fb66aa6f0525f33a",
+        "4864": "4f8343f6b867f6cb84424a4ee780dd7998fea09e",
         "4873": "ab9b0006d059bb592894cc61af597c6b9de3f3b5",
-        "5157": "c1ee730a3131c72e84832248712fd28e8ae54637"
+        "4901": "0b6d13dfef525b4038adb242dd73a1b8cacf351d",
+        "4956": "0aa052290989c618fd76c12f08305bb8c3ab9c0e",
+        "5022": "eb6aac744c5194c3bd0f2d59ffa47f1630fd510f",
+        "5073": "1cb75015a36a402ca65228b549069291af5298bb",
+        "5157": "c1ee730a3131c72e84832248712fd28e8ae54637",
+        "5166": "2e4328819d37a88f373f5ad1ac541dc4801d968a",
+        "5269": "dddf15bc3c1eaba6e3ce6f18a2647caed68c6041",
+        "5341": "b8beea01a3d9e6c1ed4783ac8c0ba0fabfff1ceb",
+        "5415": "b2d5d2f25473af9d95009d9d453c98e0e9b74fdb"
     },
     "show_commit_url": "#",
     "tags": {
