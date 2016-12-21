@@ -89,7 +89,44 @@
             "unit": "bytes"
         }
     },
-    "graph_param_list": [],
+    "graph_param_list": [
+        {
+            "arch": "x86_64",
+            "branch": "master",
+            "cloudpickle": "",
+            "cpu": "Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz",
+            "machine": "aws-ec2-c4.xlarge",
+            "numpy": "",
+            "os": "Linux 3.10.0-514.el7.x86_64",
+            "pandas": "",
+            "partd": "",
+            "pip+blosc": "",
+            "pip+git+https://github.com/dask/dask.git": "",
+            "pip+lz4": "",
+            "python": "3.5",
+            "ram": "7.5GB",
+            "s3fs": "",
+            "toolz": ""
+        },
+        {
+            "arch": "x86_64",
+            "branch": "master",
+            "cloudpickle": "",
+            "cpu": "Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz",
+            "machine": "aws-ec2-c4.xlarge",
+            "numpy": "",
+            "os": "Linux 3.10.0-514.el7.x86_64",
+            "pandas": "",
+            "partd": "",
+            "pip+blosc": "",
+            "pip+git+https://github.com/dask/dask.git": "",
+            "pip+lz4": "",
+            "python": "2.7",
+            "ram": "7.5GB",
+            "s3fs": "",
+            "toolz": ""
+        }
+    ],
     "hash_length": 8,
     "machines": {
         "aws-ec2-c4.xlarge": {
@@ -119,8 +156,54 @@
         ]
     ],
     "params": {
+        "arch": [
+            "x86_64"
+        ],
         "branch": [
             "master"
+        ],
+        "cloudpickle": [
+            ""
+        ],
+        "cpu": [
+            "Intel(R) Xeon(R) CPU E5-2666 v3 @ 2.90GHz"
+        ],
+        "machine": [
+            "aws-ec2-c4.xlarge"
+        ],
+        "numpy": [
+            ""
+        ],
+        "os": [
+            "Linux 3.10.0-514.el7.x86_64"
+        ],
+        "pandas": [
+            ""
+        ],
+        "partd": [
+            ""
+        ],
+        "pip+blosc": [
+            ""
+        ],
+        "pip+git+https://github.com/dask/dask.git": [
+            ""
+        ],
+        "pip+lz4": [
+            ""
+        ],
+        "python": [
+            "2.7",
+            "3.5"
+        ],
+        "ram": [
+            "7.5GB"
+        ],
+        "s3fs": [
+            ""
+        ],
+        "toolz": [
+            ""
         ]
     },
     "project": "distributed",
@@ -169,7 +252,8 @@
         "2379": 1478202147000,
         "2382": 1478302610000,
         "2449": 1478879846000,
-        "2463": 1479054108000
+        "2463": 1479054108000,
+        "2934": 1482349600000
     },
     "revision_to_hash": {
         "193": "0cb74eb77fda6f35d7fd459737a4a99d4f9aa4d8",
@@ -215,7 +299,8 @@
         "2379": "d26a1bf225774dc12981cc8c6c28ee2975ce9792",
         "2382": "1706377f960dde29bfca2daf75ffa45813f957e4",
         "2449": "fcf5fa4adede93ac5051bbd4275f0878a0a273ed",
-        "2463": "fd64029e8ab2675f7fad001b77c86834753706f4"
+        "2463": "fd64029e8ab2675f7fad001b77c86834753706f4",
+        "2934": "6097991bbf709212841d8af442aee15fdbe2f5ee"
     },
     "show_commit_url": "#",
     "tags": {
