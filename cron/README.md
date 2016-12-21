@@ -4,6 +4,8 @@ This directory contains a bash script and asv configuration files for automating
 
 Note that asv does have a built in feature for doing all the steps to publish to gh-pages. This was not used as we are benchmarking two packages and to achieve a custom url structure.
 
+Also note that distributed has a dependency on dask. The master branch for distributed has a strong dependency on dask master. This requires pip installing the dask dependency from github. As this is not directly supported by asv, a small hack is required as commented in the script.
+
 ## Setting up new machine (for CentOS, adapt as needed)
 
 Install requirements:
