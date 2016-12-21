@@ -1,9 +1,10 @@
 #!/usr/bin/bash
 echo "Running benchmark update `date`"
-HOME=/home/ec2-user
-BENCHMARK_REPO=$HOME/dask-benchmarks
+BENCHMARK_REPO=${BENCHMARK_REPOSITORY:-$HOME/dask-benchmarks}
 DASK_DIR=$BENCHMARK_REPO/dask
 DISTRIBUTED_DIR=$BENCHMARK_REPO/distributed
+DASK_CONFIG=${DASK_ASV_CONFIG:-$HOME/asv.dask.conf.json}
+DISTRIBUTED_CONFIG=${DISTRIBUTED_ASV_CONFIG:-$HOME/asv.distributed.conf.json}
 
 source activate dask-asv
 
@@ -14,16 +15,16 @@ git pull
 
 echo "Running dask benchmarks..."
 cd $DASK_DIR
-asv --config $HOME/asv.dask.conf.json run NEW
+asv --config $DASK_CONFIG run NEW
 DASK_STATUS=$?
 if [ "$DASK_STATUS" -eq "0" ]; then
   echo "Generating dask html files..."
-  asv --config $HOME/asv.dask.conf.json publish
+  asv --config $DASK_CONFIG publish
 fi
 
 echo "Running distributed benchmarks..."
 cd $DISTRIBUTED_DIR
-asv --config $HOME/asv.distributed.conf.json run NEW
+asv --config $DISTRIBUTED_CONFIG run NEW
 DISTRIBUTED_STATUS=$?
 if [ "$DISTRIBUTED_STATUS" -eq "0" ]; then
   echo "Generating distributed html files..."
@@ -33,7 +34,7 @@ if [ "$DISTRIBUTED_STATUS" -eq "0" ]; then
   # is not in the correct location to generate the graphs. Thus this hack to copy it
   # to the right locations before running publish.
   find /home/ec2-user/results/distributed/aws-ec2-c4.xlarge -type d -exec cp /home/ec2-user/results/distributed/aws-ec2-c4.xlarge/machine.json {} \;
-  asv --config $HOME/asv.distributed.conf.json publish
+  asv --config $DISTRIBUTED_CONFIG publish
 fi
 
 STATUSES=$(($DASK_STATUS + $DISTRIBUTED_STATUS))
