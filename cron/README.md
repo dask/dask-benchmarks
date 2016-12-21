@@ -38,7 +38,7 @@ git config --global user.email "me@email.com"
 
 The script pulls down the latest dask-benchmarks from the repository. If you want to autodeploy changes to the asv config files and the script, you can run the script directly from the cloned repository. Otherwise, copy the files to another location and configure cron accordingly.
 
-The script needs to know the location of the config files and the benchmark clone. It defaults to the common directory structure for an AWS EC2 instance but you can override by setting environment variables for `BENCHMARK_REPO`, `DASK_ASV_CONFIG`, `DISTRIBUTED_ASV_CONFIG`.
+The script needs to know the location of the config files and the benchmark clone. It defaults to the common directory structure for an AWS EC2 instance but you can override by setting environment variables for `BENCHMARK_REPOSITORY`, `DASK_ASV_CONFIG`, `DISTRIBUTED_ASV_CONFIG`.
 
 ## Configuring cron
 

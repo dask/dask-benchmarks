@@ -37,6 +37,9 @@ if [ "$DISTRIBUTED_STATUS" -eq "0" ]; then
   asv --config $DISTRIBUTED_CONFIG publish
 fi
 
+# exit on error otherwise it might still commit
+set -e
+
 STATUSES=$(($DASK_STATUS + $DISTRIBUTED_STATUS))
 if [ "$STATUSES" -lt "2" ]; then
   echo "Publishing results to github..."
