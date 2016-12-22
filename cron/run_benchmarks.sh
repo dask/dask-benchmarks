@@ -6,6 +6,9 @@ DISTRIBUTED_DIR=$BENCHMARK_REPO/distributed
 DASK_CONFIG=${DASK_ASV_CONFIG:-$HOME/asv.dask.conf.json}
 DISTRIBUTED_CONFIG=${DISTRIBUTED_ASV_CONFIG:-$HOME/asv.distributed.conf.json}
 
+echo "Creating conda environment..."
+conda create -n dask-asv python=3.5
+pip install asv
 source activate dask-asv
 
 echo "Updating benchmark repo..."
@@ -16,7 +19,9 @@ git pull
 echo "Running dask benchmarks..."
 cd $DASK_DIR
 asv --config $DASK_CONFIG run NEW
-DASK_STATUS=$?
+STATUS=$?
+asv --config $DASK_CONFIG run EXISTING --skip-existing-successful
+STATUS=$(($STATUS + $?))
 if [ "$DASK_STATUS" -eq "0" ]; then
   echo "Generating dask html files..."
   asv --config $DASK_CONFIG publish
@@ -25,7 +30,9 @@ fi
 echo "Running distributed benchmarks..."
 cd $DISTRIBUTED_DIR
 asv --config $DISTRIBUTED_CONFIG run NEW
-DISTRIBUTED_STATUS=$?
+STATUS=$(($STATUS + $?))
+asv --config $DISTRIBUTED_CONFIG run EXISTING --skip-existing-successful
+STATUS=$(($STATUS + $?))
 if [ "$DISTRIBUTED_STATUS" -eq "0" ]; then
   echo "Generating distributed html files..."
   # Currently install dask dependency for distributed via pip install git+http to
@@ -40,8 +47,7 @@ fi
 # exit on error otherwise it might still commit
 set -e
 
-STATUSES=$(($DASK_STATUS + $DISTRIBUTED_STATUS))
-if [ "$STATUSES" -lt "2" ]; then
+if [ "$STATUS" -lt "4" ]; then
   echo "Publishing results to github..."
   cd $BENCHMARK_REPO
   git checkout gh-pages
