@@ -2,9 +2,9 @@
     {
         "change_rev": null,
         "idx": null,
-        "last_err": 0.004172063333333309,
-        "last_rev": 2937,
-        "last_value": 0.294568867,
+        "last_err": 0.014933382666666661,
+        "last_rev": 2936,
+        "last_value": 0.26763849900000003,
         "name": "client.ClientSuite.time_trivial_tasks",
         "pretty_name": "client.ClientSuite.time_trivial_tasks",
         "prev_value": null
@@ -12,9 +12,9 @@
     {
         "change_rev": null,
         "idx": 0,
-        "last_err": 0.0010258126666667182,
-        "last_rev": 2937,
-        "last_value": 0.236548266,
+        "last_err": 0.000701835000000021,
+        "last_rev": 2936,
+        "last_value": 0.23494597799999994,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('large1')",
         "prev_value": null
@@ -22,9 +22,9 @@
     {
         "change_rev": null,
         "idx": 1,
-        "last_err": 0.000886745899999967,
-        "last_rev": 2937,
-        "last_value": 0.110021369,
+        "last_err": 0.0005585721333333515,
+        "last_rev": 2936,
+        "last_value": 0.10941012569999997,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('large2')",
         "prev_value": null
@@ -32,9 +32,9 @@
     {
         "change_rev": null,
         "idx": 2,
-        "last_err": 3.685216666666721e-07,
-        "last_rev": 2937,
-        "last_value": 0.00031021176500000005,
+        "last_err": 6.21261666666653e-07,
+        "last_rev": 2936,
+        "last_value": 0.000309109744,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('medium1')",
         "prev_value": null
@@ -42,9 +42,9 @@
     {
         "change_rev": null,
         "idx": 3,
-        "last_err": 1.5333662666666952e-06,
-        "last_rev": 2937,
-        "last_value": 0.00016921063579999993,
+        "last_err": 8.014233333333394e-07,
+        "last_rev": 2936,
+        "last_value": 0.0001675353421,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('medium2')",
         "prev_value": null
@@ -52,9 +52,9 @@
     {
         "change_rev": null,
         "idx": 4,
-        "last_err": 1.046276666666635e-07,
-        "last_rev": 2937,
-        "last_value": 0.00028349105799999996,
+        "last_err": 5.235016666666807e-07,
+        "last_rev": 2936,
+        "last_value": 0.00028320267499999994,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('medium3')",
         "prev_value": null
@@ -62,9 +62,9 @@
     {
         "change_rev": null,
         "idx": 5,
-        "last_err": 4.191714666666545e-08,
-        "last_rev": 2937,
-        "last_value": 1.360068993e-05,
+        "last_err": 2.328402333333275e-08,
+        "last_rev": 2936,
+        "last_value": 1.3629915659999998e-05,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('small1')",
         "prev_value": null
@@ -72,9 +72,9 @@
     {
         "change_rev": null,
         "idx": 6,
-        "last_err": 1.9522280000000477e-08,
-        "last_rev": 2937,
-        "last_value": 5.228841469999999e-06,
+        "last_err": 1.0445581999999927e-07,
+        "last_rev": 2936,
+        "last_value": 5.219583269999997e-06,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('small2')",
         "prev_value": null
@@ -82,9 +82,9 @@
     {
         "change_rev": null,
         "idx": 7,
-        "last_err": 3.4347013333333164e-08,
-        "last_rev": 2937,
-        "last_value": 5.442932980000004e-06,
+        "last_err": 6.332145666666724e-08,
+        "last_rev": 2936,
+        "last_value": 5.537280229999999e-06,
         "name": "protocol.ProtocolSuite.time_dumps",
         "pretty_name": "protocol.ProtocolSuite.time_dumps('small3')",
         "prev_value": null
@@ -92,9 +92,9 @@
     {
         "change_rev": null,
         "idx": 0,
-        "last_err": 1.3972366666670233e-05,
-        "last_rev": 2937,
-        "last_value": 0.08031451170000001,
+        "last_err": 6.226690000000108e-05,
+        "last_rev": 2936,
+        "last_value": 0.0802104821,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('large1')",
         "prev_value": null
@@ -102,9 +102,9 @@
     {
         "change_rev": null,
         "idx": 1,
-        "last_err": 0.0005050805666666722,
-        "last_rev": 2937,
-        "last_value": 0.03635802889999999,
+        "last_err": 0.0005263422666666554,
+        "last_rev": 2936,
+        "last_value": 0.036408512299999994,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('large2')",
         "prev_value": null
@@ -112,9 +112,9 @@
     {
         "change_rev": null,
         "idx": 2,
-        "last_err": 6.412921666666653e-07,
-        "last_rev": 2937,
-        "last_value": 0.00015612070779999994,
+        "last_err": 2.1839989999997695e-07,
+        "last_rev": 2936,
+        "last_value": 0.0001548664982,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('medium1')",
         "prev_value": null
@@ -122,9 +122,9 @@
     {
         "change_rev": null,
         "idx": 3,
-        "last_err": 2.899277000000005e-07,
-        "last_rev": 2937,
-        "last_value": 2.527365199999999e-05,
+        "last_err": 4.913714666666683e-07,
+        "last_rev": 2936,
+        "last_value": 2.5855056499999997e-05,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('medium2')",
         "prev_value": null
@@ -132,9 +132,9 @@
     {
         "change_rev": null,
         "idx": 4,
-        "last_err": 5.4433000000005494e-08,
-        "last_rev": 2937,
-        "last_value": 7.076328809999999e-05,
+        "last_err": 2.5783519999998824e-07,
+        "last_rev": 2936,
+        "last_value": 7.09331159e-05,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('medium3')",
         "prev_value": null
@@ -142,9 +142,9 @@
     {
         "change_rev": null,
         "idx": 5,
-        "last_err": 2.5091189999999574e-08,
-        "last_rev": 2937,
-        "last_value": 3.936074169999997e-06,
+        "last_err": 4.160010000000024e-09,
+        "last_rev": 2936,
+        "last_value": 3.822207129999999e-06,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('small1')",
         "prev_value": null
@@ -152,9 +152,9 @@
     {
         "change_rev": null,
         "idx": 6,
-        "last_err": 1.9200953333333576e-08,
-        "last_rev": 2937,
-        "last_value": 2.429355969999999e-06,
+        "last_err": 2.7403633333333042e-08,
+        "last_rev": 2936,
+        "last_value": 2.42656459e-06,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('small2')",
         "prev_value": null
@@ -162,9 +162,9 @@
     {
         "change_rev": null,
         "idx": 7,
-        "last_err": 6.093595666666699e-08,
-        "last_rev": 2937,
-        "last_value": 2.122819920000001e-06,
+        "last_err": 5.7477149999998935e-08,
+        "last_rev": 2936,
+        "last_value": 2.0764382700000007e-06,
         "name": "protocol.ProtocolSuite.time_loads",
         "pretty_name": "protocol.ProtocolSuite.time_loads('small3')",
         "prev_value": null
@@ -173,7 +173,7 @@
         "change_rev": null,
         "idx": 0,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 41505488.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('large1')",
@@ -183,7 +183,7 @@
         "change_rev": null,
         "idx": 1,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 104857781.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('large2')",
@@ -193,7 +193,7 @@
         "change_rev": null,
         "idx": 2,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 41062.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('medium1')",
@@ -203,7 +203,7 @@
         "change_rev": null,
         "idx": 3,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 102579.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('medium2')",
@@ -213,7 +213,7 @@
         "change_rev": null,
         "idx": 4,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 40294.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('medium3')",
@@ -223,7 +223,7 @@
         "change_rev": null,
         "idx": 5,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 295.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('small1')",
@@ -233,7 +233,7 @@
         "change_rev": null,
         "idx": 6,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 342.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('small2')",
@@ -243,7 +243,7 @@
         "change_rev": null,
         "idx": 7,
         "last_err": 0.0,
-        "last_rev": 2937,
+        "last_rev": 2936,
         "last_value": 104.0,
         "name": "protocol.ProtocolSuite.track_size",
         "pretty_name": "protocol.ProtocolSuite.track_size('small3')",
