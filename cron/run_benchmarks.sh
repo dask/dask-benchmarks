@@ -18,22 +18,26 @@ git pull
 
 echo "Running dask benchmarks..."
 cd $DASK_DIR
+echo "    Benchmarking new commits..."
 asv --config $DASK_CONFIG run NEW
-STATUS=$?
+DASK_STATUS=$?
+echo "    Running new benchmarks on existing commits..."
 asv --config $DASK_CONFIG run EXISTING --skip-existing-successful
-STATUS=$(($STATUS + $?))
-if [ "$DASK_STATUS" -eq "0" ]; then
+DASK_STATUS=$(($DASK_STATUS + $?))
+if [ "$DASK_STATUS" -lt "2" ]; then
   echo "Generating dask html files..."
   asv --config $DASK_CONFIG publish
 fi
 
 echo "Running distributed benchmarks..."
 cd $DISTRIBUTED_DIR
+echo "    Benchmarking new commits..."
 asv --config $DISTRIBUTED_CONFIG run NEW
-STATUS=$(($STATUS + $?))
+DISTRIBUTED_STATUS=$?
+echo "    Running new benchmarks on existing commits..."
 asv --config $DISTRIBUTED_CONFIG run EXISTING --skip-existing-successful
-STATUS=$(($STATUS + $?))
-if [ "$DISTRIBUTED_STATUS" -eq "0" ]; then
+STATUS=$(($DISTRIBUTED_STATUS + $?))
+if [ "$DISTRIBUTED_STATUS" -lt "2" ]; then
   echo "Generating distributed html files..."
   # Currently install dask dependency for distributed via pip install git+http to
   # get current dask master. asv does not directly support this even though you
@@ -47,6 +51,7 @@ fi
 # exit on error otherwise it might still commit
 set -e
 
+STATUS=$(($DASK_STATUS + $DISTRIBUTED_STATUS))
 if [ "$STATUS" -lt "4" ]; then
   echo "Publishing results to github..."
   cd $BENCHMARK_REPO
