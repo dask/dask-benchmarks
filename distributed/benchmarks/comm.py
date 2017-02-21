@@ -12,14 +12,15 @@ def run_sync(loop, func):
     The function must return a yieldable object
 
     This is a limited, faster version of IOLoop.run_sync().
-    (this function's overhead is 190 µs here, while
-     IOLoop.run_sync's overhead is 300 µs)
+    (this function's overhead is 36 µs here, while
+     IOLoop.run_sync's overhead is 68 µs)
     """
     future_cell = [None]
 
     def run():
-        future_cell[0] = func()
-        future_cell[0].add_done_callback(lambda _: loop.stop())
+        fut = gen.convert_yielded(func())
+        fut.add_done_callback(lambda _: loop.stop())
+        future_cell[0] = fut
 
     loop.add_callback(run)
     loop.start()
@@ -76,7 +77,6 @@ class Connect(object):
         listener.stop()
 
     def _time_connect(self, address):
-        # XXX run_sync() has a high overhead
         run_sync(self.loop, partial(self._main, address))
 
     def time_tcp_connect(self):
