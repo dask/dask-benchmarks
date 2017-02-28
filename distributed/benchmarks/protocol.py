@@ -116,11 +116,11 @@ frames = _compute_frames(messages)
 
 def frames_len(frames):
     assert isinstance(frames, (list, tuple))
-    assert all(isinstance(f, bytes) for f in frames)
+    assert all(isinstance(f, (bytes, memoryview)) for f in frames)
     return sum(map(len, frames))
 
 
-class ProtocolSuite(object):
+class Protocol(object):
 
     params = sorted(messages)
 
