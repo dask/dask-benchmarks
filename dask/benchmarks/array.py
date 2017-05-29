@@ -1,4 +1,5 @@
 from dask import array as da
+from dask.base import tokenize
 import numpy as np
 
 from .common import DaskSuite, rnd
@@ -47,3 +48,16 @@ class FancyIndexing(DaskSuite):
 
     def time_fancy(self):
         self.a[self.c][:, self.s]
+
+
+class Tokenize(DaskSuite):
+    """
+    Micro-benchmark of tokenize() on Numpy arrays.
+    """
+    N = 1000000
+
+    def setup(self):
+        self.large = rnd().random_sample((self.N // 1000, 1000))
+
+    def time_tokenize_large(self):
+        tokenize(self.large)

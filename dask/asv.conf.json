@@ -60,7 +60,9 @@
         "pandas": [],
         "distributed": [],
         "s3fs": [],
-        "pytables": []
+        "pytables": [],
+        "pip+cityhash": [],
+        "pip+xxhash": []
     },
 
     // Combinations of libraries/python versions can be excluded/included
