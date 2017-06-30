@@ -2,5 +2,7 @@
 *.asv/
 
 # Project repos
+dask/
 dask/dask/
+distributed/
 distributed/distributed/
