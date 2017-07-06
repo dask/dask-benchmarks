@@ -59,7 +59,9 @@
         "partd": [],
         "pandas": [],
         "distributed": [],
-        "s3fs": []
+        "s3fs": [],
+        "python-blosc": [],
+        "lz4": []
     },
 
     // Combinations of libraries/python versions can be excluded/included
