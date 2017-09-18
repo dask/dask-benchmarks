@@ -61,3 +61,14 @@ class Tokenize(DaskSuite):
 
     def time_tokenize_large(self):
         tokenize(self.large)
+
+
+class TestSubs(DaskSuite):
+    def setup(self):
+        x = da.ones((50, 50), chunks=(10, 10))
+        self.arr = (x.reshape(-1, 1).rechunk(50, 2)
+                     .reshape(50, 50).rechunk(25, 25)
+                     .reshape(1, -1) .reshape(50, 50))
+
+    def time_subs(self):
+        self.arr.compute()
