@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 from functools import partial
+import os
 
 from tornado import gen
 from tornado.ioloop import IOLoop
 
 from distributed.comm import connect, listen
+
+
+def to_serialized(obj):
+    from distributed.protocol import Serialized, serialize
+    return Serialized(*serialize(obj))
 
 
 def run_sync(loop, func):
@@ -93,14 +99,27 @@ class Transfer(object):
     N_SMALL_TRANSFERS = 100
     N_LARGE_TRANSFERS = 100
 
+    _LARGE = 10 * 1024 * 1024
+    _LARGE_UNCOMPRESSIBLE = os.urandom(_LARGE // 10) * 10
+
     MSG_SMALL = {'op': 'update',
                  'x': [123, 456],
                  'data': b'foo',
                  }
+    # Since this is compressible, it might stress compression instead of
+    # actual transmission cost
     MSG_LARGE = {'op': 'update',
                  'x': [123, 456],
-                 'data': b'z' * (10 * 1024 * 1024),
+                 'data': b'z' * _LARGE,
                  }
+    MSG_LARGE_UNCOMPRESSIBLE = {'op': 'update',
+                                'x': [123, 456],
+                                'data': _LARGE_UNCOMPRESSIBLE,
+                                }
+    MSG_LARGE_SERIALIZED = {'op': 'update',
+                            'x': [123, 456],
+                            'data': to_serialized(_LARGE_UNCOMPRESSIBLE),
+                            }
 
     def setup(self):
         self.loop = IOLoop()
@@ -114,10 +133,10 @@ class Transfer(object):
         yield comm.close()
 
     @gen.coroutine
-    def _main(self, address, obj, n_transfers):
-        listener = listen(address, partial(self._handle_comm, n_transfers))
+    def _main(self, address, obj, n_transfers, **kwargs):
+        listener = listen(address, partial(self._handle_comm, n_transfers), **kwargs)
         listener.start()
-        comm = yield connect(listener.contact_address)
+        comm = yield connect(listener.contact_address, **kwargs)
         for i in range(n_transfers):
             yield comm.write(obj)
         # Read back to ensure that the round-trip is complete
@@ -134,11 +153,30 @@ class Transfer(object):
         run_sync(self.loop,
                  partial(self._main, address, self.MSG_LARGE, self.N_LARGE_TRANSFERS))
 
+    def _time_large_uncompressible(self, address):
+        run_sync(self.loop,
+                 partial(self._main, address,
+                         self.MSG_LARGE_UNCOMPRESSIBLE, self.N_LARGE_TRANSFERS,
+                         ))
+
+    def _time_large_no_deserialize(self, address):
+        run_sync(self.loop,
+                 partial(self._main, address,
+                         self.MSG_LARGE_SERIALIZED, self.N_LARGE_TRANSFERS,
+                         deserialize=False,
+                         ))
+
     def time_tcp_small_transfers(self):
         self._time_small('tcp://127.0.0.1')
 
     def time_tcp_large_transfers(self):
         self._time_large('tcp://127.0.0.1')
+
+    def time_tcp_large_transfers_uncompressible(self):
+        self._time_large_uncompressible('tcp://127.0.0.1')
+
+    def time_tcp_large_transfers_no_serialize(self):
+        self._time_large_no_deserialize('tcp://127.0.0.1')
 
     def time_inproc_small_transfers(self):
         self._time_small('inproc://')
