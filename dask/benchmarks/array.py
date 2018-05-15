@@ -49,6 +49,25 @@ class FancyIndexing(DaskSuite):
     def time_fancy(self):
         self.a[self.c][:, self.s]
 
+class Slicing(DaskSuite):
+
+    def setup(self):
+        self.N = 100000
+        self.a = da.empty(shape=(self.N,), dtype='i1',
+                          chunks=[1] * self.N)
+
+    def time_slice_slice_head(self):
+        self.a[slice(10, 51, None)].compute()
+
+    def time_slice_slice_tail(self):
+        self.a[slice(self.N - 51, self.N - 10, None)].compute()
+
+    def time_slice_int_tail(self):
+        self.a[self.N - 51].compute()
+
+    def time_slice_int_head(self):
+        self.a[51].compute()
+
 
 class Tokenize(DaskSuite):
     """
