@@ -24,9 +24,9 @@ class Block3D(DaskSuite):
     # Having all these modes puts the plots on the same graph
     # as opposed to being displayed as separate benchmarks
     params = [[1, 10, 100],
-              ['da_block', 'da_block_optimized',
-               'da_block_persist', 'da_block_optimized_persist',
-               'da_concatenate',
+              ['block', 'block optimized',
+               'block persist', 'block optimized persist',
+               'concatenate',
                'np_block', 'np_copy']]
     param_names = ['n', 'mode']
 
@@ -85,17 +85,17 @@ class Block3D(DaskSuite):
 
         self.da_block = da.block(self.block)
         self.da_concatenate = da.concatenate(self.arr_list)
-        if mode.startswith('da_block_optimized'):
+        if mode.startswith('block optimized'):
             self.da_block.dask, _ = fuse_linear(self.da_block.dask)
 
 
     def time_3d(self, n, mode):
-        if mode.startswith('da_block'):
+        if mode.startswith('block'):
             if mode.endswith('persist'):
                 self.da_block.persist()
             else:
                 self.da_block.compute()
-        elif mode.startswith('da_concatenate'):
+        elif mode.startswith('concatenate'):
             if mode.endswith('persist'):
                 self.da_concatenate.persist()
             else:
