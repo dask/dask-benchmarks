@@ -10,23 +10,28 @@ class Block3D(DaskSuite):
 
     This is very similar to the numpy benchmark Block3D.
 
-    In this benchmark, we are
+    In this benchmark, we are comparing the performance of dask.array.block
+    to that of numpy and a direct memory copy of the array.
+
+    We also compare the optimized version and unoptimized version of the
+    computation as well as the performance of concatenating 1D versions of
+    the dask arrays.
+
+    Finally, we also ensure that a call to persist on a 3D block doesn't
+    copy memory around by returning in a minimal amount of time.
     """
     #
-    # Having concatenate as a `mode` of the block3D
-    # allows us to directly compare the benchmark of block
-    # to that of `concatenate` with the ASV framework.
-    # block and concatenate will be plotted on the same graph
+    # Having all these modes puts the plots on the same graph
     # as opposed to being displayed as separate benchmarks
     params = [[1, 10, 100],
               ['da_block', 'da_block_optimized',
                'da_block_persist', 'da_block_optimized_persist',
                'da_concatenate',
-               'np_block', 'np_copy'],
-              ['uint64']]
-    param_names = ['n', 'mode', 'dtype']
+               'np_block', 'np_copy']]
+    param_names = ['n', 'mode']
 
-    def setup(self, n, mode, dtype):
+    def setup(self, n, mode):
+        dtype = 'uint64'
         self.n000 = np.full((2 * n, 2 * n, 2 * n), fill_value=1, dtype=dtype)
         self.n001 = np.full((2 * n, 2 * n, 3 * n), fill_value=4, dtype=dtype)
 
@@ -84,7 +89,7 @@ class Block3D(DaskSuite):
             self.da_block.dask, _ = fuse_linear(self.da_block.dask)
 
 
-    def time_3d(self, n, mode, dtype):
+    def time_3d(self, n, mode):
         if mode.startswith('da_block'):
             if mode.endswith('persist'):
                 self.da_block.persist()
