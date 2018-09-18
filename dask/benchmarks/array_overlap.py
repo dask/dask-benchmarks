@@ -15,4 +15,4 @@ class MapOverlap(DaskSuite):
 
     def time_map_overlap(self, shape, boundary):
         map_overlap(self.arr, lambda x: x,
-            depth=1, boundary=boundary, trim=True).compute()
+            depth=1, boundary=boundary, trim=True).persist()
