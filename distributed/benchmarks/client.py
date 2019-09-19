@@ -36,4 +36,4 @@ class ClientSuite(object):
         L = [inc(i) for i in range(500)]
         total = delayed(sum, pure=True)(L)
 
-        total.compute(get=self.client.get)
+        total.compute(scheduler=self.client)
