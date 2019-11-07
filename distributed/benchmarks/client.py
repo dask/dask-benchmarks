@@ -1,28 +1,24 @@
 # -*- coding: utf-8 -*-
-from distributed import Client
+import copy
+
+import time
 
 from dask import delayed
+from distributed import Client, Worker, wait, LocalCluster
+
+
+def slowinc(x, delay=0.02):
+    time.sleep(delay)
+    return x + 1
 
 
 class ClientSuite(object):
 
     def setup(self):
         self.client = Client()
-        """
-        self.loop = IOLoop()
-        self.scheduler = Scheduler()
-        self.scheduler.start(0)
-        self.workers = [Worker(self.scheduler.ip, self.scheduler.port,
-                               loop=loop) for i in range(4)]
-        self.client = Client(self.scheduler.address, loop=loop, start=False)
 
-        @gen.coroutine
-        def start():
-            yield [w._start(0) for w in self.workers]
-            yield self.client._start()
-
-        loop.run_sync(start)
-        """
+    def teardown(self):
+        self.client.close()
 
     def time_trivial_tasks(self):
         """
@@ -37,3 +33,38 @@ class ClientSuite(object):
         total = delayed(sum, pure=True)(L)
 
         total.compute(scheduler=self.client)
+
+
+class WorkerRestrictionsSuite(object):
+
+    def setup(self):
+        cluster = LocalCluster(n_workers=1, threads_per_worker=1,
+                               resources={"resource": 1}, worker_class=Worker)
+        spec = copy.deepcopy(cluster.new_worker_spec())
+        del spec[1]['options']['resources']
+        cluster.worker_spec.update(spec)
+        cluster.scale(2)
+        client = Client(cluster)
+
+        self.client = client
+
+    def teardown(self):
+        self.client.close()
+
+    def time_trivial_tasks_restrictions(self):
+        """
+        Benchmark measuring the improvment from allowing new workers
+        to steal tasks with resource restrictions.
+        """
+        client = self.client
+
+        info = client.scheduler_info()
+        workers = list(info['workers'])
+        futures = client.map(slowinc, range(10),
+                             delay=0.1, resources={"resource": 1})
+        client.cluster.scale(len(workers) + 1)
+
+        wait(futures)
+        new_worker = client.cluster.workers[2]
+        assert new_worker.available_resources == {'resource': 1}
+        # assert len(new_worker.task_state)
