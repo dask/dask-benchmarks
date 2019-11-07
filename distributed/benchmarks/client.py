@@ -11,6 +11,9 @@ class ClientSuite(object):
     def setup(self):
         self.client = Client()
 
+    def teardown(self):
+        self.client.close()
+
     def time_trivial_tasks(self):
         """
         Measure scheduler and communication overhead by running
