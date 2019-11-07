@@ -14,10 +14,12 @@ steps:
 
 - script: |
     cd dask
+    asv machine --yes
     asv run --quick --show-stderr
   displayName: 'Run Dask Benchmarks'
 
 - script: |
     cd distributed
+    asv machine --yes
     asv run --quick --show-stderr
   displayName: 'Run Distributed Benchmarks'
