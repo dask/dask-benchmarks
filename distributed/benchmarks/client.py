@@ -43,12 +43,16 @@ class WorkerRestrictionsSuite(object):
         self.client.close()
 
     def time_trivial_tasks_restrictions(self):
+        """
+        Benchmark measuring the improvment from allowing new workers
+        to steal tasks with resource restrictions.
+        """
         client = self.client
 
         info = client.scheduler_info()
         workers = list(info['workers'])
-        futures = client.map(slowinc, range(10),
-                             delay=0.1, resources={"resource": 1})
+        futures = client.map(slowinc, range(20),
+                             delay=0.01, resources={"resource": 1})
         client.cluster.scale(len(workers) + 1)
 
         wait(futures)
