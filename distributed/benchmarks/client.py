@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 import copy
 
+import time
+
 from dask import delayed
 from distributed import Client, Worker, wait, LocalCluster
-from distributed.utils_test import slowinc
+
+
+def slowinc(x, delay=0.02):
+    time.sleep(delay)
+    return x + 1
 
 
 class ClientSuite(object):
