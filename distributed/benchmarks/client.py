@@ -51,10 +51,11 @@ class WorkerRestrictionsSuite(object):
 
         info = client.scheduler_info()
         workers = list(info['workers'])
-        futures = client.map(slowinc, range(20),
-                             delay=0.01, resources={"resource": 1})
+        futures = client.map(slowinc, range(10),
+                             delay=0.1, resources={"resource": 1})
         client.cluster.scale(len(workers) + 1)
 
         wait(futures)
         new_worker = client.cluster.workers[2]
         assert new_worker.available_resources == {'resource': 1}
+        # assert len(new_worker.task_state)
