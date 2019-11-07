@@ -1,0 +1,23 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- bash: echo "##vso[task.prependpath]$CONDA/bin"
+  displayName: Add conda to PATH
+
+- script: |
+    conda install -y -c conda-forge asv
+  displayName: 'Install ASV'
+
+- script: |
+    cd dask
+    asv run --quick --show-stderr
+  displayName: 'Run Dask Benchmarks'
+
+- script: |
+    cd distributed
+    asv run --quick --show-stderr
+  displayName: 'Run Distributed Benchmarks'
