@@ -77,7 +77,7 @@ class Connect(object):
     @gen.coroutine
     def _main(self, address):
         listener = listen(address, self._handle_comm)
-        listener.start()
+        yield listener.start()
         yield [self._connect_close(listener.contact_address)
                for i in range(self.N_CONNECTS)]
         listener.stop()
@@ -135,7 +135,7 @@ class Transfer(object):
     @gen.coroutine
     def _main(self, address, obj, n_transfers, **kwargs):
         listener = listen(address, partial(self._handle_comm, n_transfers), **kwargs)
-        listener.start()
+        yield listener.start()
         comm = yield connect(listener.contact_address, **kwargs)
         for i in range(n_transfers):
             yield comm.write(obj)
