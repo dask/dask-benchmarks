@@ -64,6 +64,7 @@
         "pip+cityhash": [],
         "pip+xxhash": [],
         "fsspec": [],
+        "scipy": [],
     },
 
     // Combinations of libraries/python versions can be excluded/included
