@@ -37,15 +37,15 @@ def create_disconnected_subgraphs(num_groups, width, height):
 
 class OrderMapOverlap(DaskSuite):
     params = [[
-        ((1000, 1000), (100, 100), 1),
-        ((1e4, 1e4), (512, 512), 10),
+        ((1e4, 1e4), (200, 200), 1),
+        ((1000, 1000, 1000), (100, 100, 100), 10),
     ]]
 
     def setup(self, param):
         size, chunks, depth = param
         a = da.random.random(size, chunks=chunks)
         b = a.map_overlap(lambda e: 2 * e, depth=depth)
-        self.dsk = collections_to_dsk(b)
+        self.dsk = collections_to_dsk([b])
 
     def time_order_mapoverlap(self, param):
         order(self.dsk)
@@ -66,9 +66,9 @@ class OrderRechunkTranspose(DaskSuite):
         a = da.random.normal(size=(4e6, 30e2), chunks=(2e4, 3e1))
         a = a.rechunk((int(1e4 / 10), int(30e2)))
         b = a.T.dot(a)
-        self.dsk_rechunk_transpose = collections_to_dsk(b)
+        self.dsk_rechunk_transpose = collections_to_dsk([b])
 
-    def time_order04(self):
+    def time_order_rechunk_transpose(self):
         order(self.dsk_rechunk_transpose)
 
 
@@ -83,7 +83,7 @@ class OrderLinalgSolves(DaskSuite):
             [da.linalg.solve(xx[i], xy[i]) for i in range(xx.shape[0])], axis=0
         )
         ey = (x * beta).sum(axis=1)
-        self.dsk_linalg = collections_to_dsk(ey)
+        self.dsk_linalg = collections_to_dsk([ey])
 
     def time_order_linalg_solve(self):
         order(self.dsk_linalg)
