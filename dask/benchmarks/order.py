@@ -36,20 +36,19 @@ def create_disconnected_subgraphs(num_groups, width, height):
 
 
 class OrderMapOverlap(DaskSuite):
-    def setup(self):
-        a = da.random.random((1000, 1000), chunks=(100, 100))
-        b = a.map_overlap(lambda e: 2 * e, depth=1)
-        self.dsk_medium = collections_to_dsk(b)
+    params = [[
+        ((1000, 1000), (100, 100), 1),
+        ((1e4, 1e4), (512, 512), 10),
+    ]]
 
-        a = da.random.random((1e4, 1e4), chunks=(512, 512))
-        b = a.map_overlap(lambda e: 2 * e, depth=10)
-        self.dsk_large = collections_to_dsk(b)
+    def setup(self, param):
+        size, chunks, depth = param
+        a = da.random.random(size, chunks=chunks)
+        b = a.map_overlap(lambda e: 2 * e, depth=depth)
+        self.dsk = collections_to_dsk(b)
 
-    def time_order_mapoverlap_medium(self):
-        order(self.dsk_medium)
-
-    def time_order_mapoverlap_large(self):
-        order(self.dsk_large)
+    def time_order_mapoverlap(self, param):
+        order(self.dsk)
 
 
 class OrderSVD(DaskSuite):
@@ -91,60 +90,51 @@ class OrderLinalgSolves(DaskSuite):
 
 
 class OrderFullLayers(DaskSuite):
-    def setup(self):
-        self.dsk1 = fully_connected_layers(1, 50000)
-        self.dsk2 = fully_connected_layers(2, 10000)
-        self.dsk3 = fully_connected_layers(10, 1000)
-        self.dsk4 = fully_connected_layers(100, 20)
-        self.dsk5 = fully_connected_layers(500, 2)
-        self.dsk6 = fully_connected_layers(9999, 1)
-        self.dsk7 = fully_connected_layers(50000, 1)
+    params = [[
+        (1, 50000),
+        (2, 10000),
+        (10, 1000),
+        (100, 20),
+        (500, 2),
+        (9999, 1),
+        (50000, 1),
+    ]]
 
-    def time_order_full_1_50000(self):
-        order(self.dsk1)
+    def setup(self, param):
+        width, height = param
+        self.dsk = fully_connected_layers(width, height)
 
-    def time_order_full_2_10000(self):
-        order(self.dsk2)
-
-    def time_order_full_10_1000(self):
-        order(self.dsk3)
-
-    def time_order_full_100_20(self):
-        order(self.dsk4)
-
-    def time_order_full_500_2(self):
-        order(self.dsk5)
-
-    def time_order_full_9999_1(self):
-        order(self.dsk6)
-
-    def time_order_full_50000_1(self):
-        order(self.dsk7)
+    def time_order_full_layers(self, param):
+        order(self.dsk)
 
 
 class OrderLinearWithDanglers(DaskSuite):
-    def setup(self):
-        self.dsk1 = {(0, 0): (f,)}
-        for i in range(1, 10000):
-            for j in range(2):
-                self.dsk1[(i, j)] = (f, (i - 1, 0))
+    params = [[
+        (2, 10000),
+        (5, 5000),
+    ]]
 
-        self.dsk2 = {(0, 0): (f,)}
-        for i in range(1, 5000):
-            for j in range(5):
-                self.dsk2[(i, j)] = (f, (i - 1, 0))
+    def setup(self, param):
+        width, height = param
+        self.dsk = {(0, 0): (f,)}
+        for i in range(1, height):
+            for j in range(width):
+                self.dsk[(i, j)] = (f, (i - 1, 0))
 
-    def time_order_linear_danglers_2(self):
-        order(self.dsk1)
-
-    def time_order_linear_danglers_5(self):
-        order(self.dsk2)
+    def time_order_linear_danglers(self, param):
+        order(self.dsk)
 
 
 class OrderLinearFull(DaskSuite):
     def setup(self):
-        # Although not a realistic DAG, this is cleverly constructed
-        # to stress a current weakness of `order`.
+        # Although not a realistic DAG, this is cleverly constructed to stress
+        # a current weakness of `order` in https://github.com/dask/dask/pull/5646
+        # Specifically, nodes use a tie-breaker `num_dependents - height` in
+        # order to prefer "tall and narrow".  Here, all non-root nodes have the
+        # same height, so we prefer "narrow"--i.e., fewer dependents--which means
+        # we choose the node that is least ready to compute.  So, this is a worst
+        # case scenario.  This is unlikely to occur in practice, because task
+        # fusion should fuse this into a single task.
         self.dsk = {0: (f,)}
         prev = (f, 0)
         for i in range(1, 1000):
@@ -157,29 +147,18 @@ class OrderLinearFull(DaskSuite):
 
 class OrderManySubgraphs(DaskSuite):
     """This tests behavior when there are few or many disconnected subgraphs"""
+    params = [[
+        (1, 9999),
+        (3, 3333),
+        (10, 999),
+        (30, 303),
+        (100, 99),
+        (999, 10),
+    ]]
 
-    def setup(self):
-        self.dsk1 = create_disconnected_subgraphs(1, 9999, 2)
-        self.dsk2 = create_disconnected_subgraphs(3, 3333, 2)
-        self.dsk3 = create_disconnected_subgraphs(10, 999, 2)
-        self.dsk4 = create_disconnected_subgraphs(30, 303, 2)
-        self.dsk5 = create_disconnected_subgraphs(100, 99, 2)
-        self.dsk6 = create_disconnected_subgraphs(999, 10, 2)
+    def setup(self, param):
+        num_subgraphs, width = param
+        self.dsk = create_disconnected_subgraphs(num_subgraphs, width, 2)
 
-    def time_order_many_subgraphs_1_9999(self):
-        order(self.dsk1)
-
-    def time_order_many_subgraphs_3_3333(self):
-        order(self.dsk2)
-
-    def time_order_many_subgraphs_10_999(self):
-        order(self.dsk3)
-
-    def time_order_many_subgraphs_30_303(self):
-        order(self.dsk4)
-
-    def time_order_many_subgraphs_100_99(self):
-        order(self.dsk5)
-
-    def time_order_many_subgraphs_999_10(self):
-        order(self.dsk6)
+    def time_order_many_subgraphs(self, param):
+        order(self.dsk)
