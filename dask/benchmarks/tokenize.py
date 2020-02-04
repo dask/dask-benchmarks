@@ -3,10 +3,10 @@ import numpy as np
 from dask.base import tokenize
 from distutils.version import LooseVersion
 
-from .common import DaskSuite
+from .common import DaskSuite, rnd
 
 
-class TimeTokenizePandas(DaskSuite):
+class TokenizePandas(DaskSuite):
     params = [
         [
             "period",
@@ -50,4 +50,39 @@ class TimeTokenizePandas(DaskSuite):
             self.obj = array
 
     def time_tokenize(self, dtype, as_series):
+        tokenize(self.obj)
+
+
+class TokenizeNumpy(DaskSuite):
+    N = 1000000
+    params = [
+        "int",
+        "float",
+        "str",
+        "bytes",
+        "object"
+    ]
+    param_names = ["dtype"]
+
+    def setup(self, dtype):
+        N = 1000000
+        if dtype == "int":
+            obj = rnd().randint(-1000, 1000 + 1, N).astype("i8")
+        elif dtype == "float":
+            obj = rnd().uniform(-1000, 1000 + 1, N).astype("f8")
+        elif dtype in ("str", "bytes"):
+            obj = rnd().choice(
+                [
+                    "Leslie", "Ben", "Jerry", "Andy", "April", "Tom", "Ann",
+                    "Chris", "Donna", "Ron"
+                ],
+                N,
+            )
+            if dtype == "bytes":
+                obj = obj.astype("S")
+        elif dtype == "object":
+            obj = rnd().randint(-1000, 1000 + 1, N).astype("object")
+        self.obj = obj
+
+    def time_tokenize(self, dtype):
         tokenize(self.obj)
