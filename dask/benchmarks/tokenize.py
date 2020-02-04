@@ -6,6 +6,17 @@ from distutils.version import LooseVersion
 from .common import DaskSuite, rnd
 
 
+class TokenizeBuiltins(DaskSuite):
+    def setup(self):
+        N = 10000
+        self.obj = {
+            i: ("tuple", ["list", i], {"set", i}, i) for i in range(N)
+        }
+
+    def time_tokenize(self):
+        tokenize(self.obj)
+
+
 class TokenizePandas(DaskSuite):
     params = [
         [
@@ -54,7 +65,6 @@ class TokenizePandas(DaskSuite):
 
 
 class TokenizeNumpy(DaskSuite):
-    N = 1000000
     params = [
         "int",
         "float",
