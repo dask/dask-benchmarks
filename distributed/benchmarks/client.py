@@ -37,21 +37,25 @@ class ClientSuite(object):
 
 class WorkerRestrictionsSuite(object):
 
-    def setup(self):
+    params = [{"resource":1},None]
+
+    def setup(self,resource):
         cluster = LocalCluster(n_workers=1, threads_per_worker=1,
-                               resources={"resource": 1}, worker_class=Worker)
+                               resources=resource, worker_class=Worker)
         spec = copy.deepcopy(cluster.new_worker_spec())
-        del spec[1]['options']['resources']
+        
+        if resource:
+            del spec[1]['options']['resources']
         cluster.worker_spec.update(spec)
         cluster.scale(2)
         client = Client(cluster)
 
         self.client = client
 
-    def teardown(self):
+    def teardown(self,resource):
         self.client.close()
 
-    def time_trivial_tasks_restrictions(self):
+    def time_trivial_tasks(self,resource):
         """
         Benchmark measuring the improvment from allowing new workers
         to steal tasks with resource restrictions.
@@ -61,10 +65,10 @@ class WorkerRestrictionsSuite(object):
         info = client.scheduler_info()
         workers = list(info['workers'])
         futures = client.map(slowinc, range(10),
-                             delay=0.1, resources={"resource": 1})
+                             delay=0.1, resources=resource)
         client.cluster.scale(len(workers) + 1)
 
         wait(futures)
         new_worker = client.cluster.workers[2]
-        assert new_worker.available_resources == {'resource': 1}
+        # assert new_worker.available_resources == {'resource': 1}
         # assert len(new_worker.task_state)
