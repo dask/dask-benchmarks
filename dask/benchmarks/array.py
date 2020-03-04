@@ -1,3 +1,4 @@
+import numpy as np
 from dask import array as da
 
 from .common import DaskSuite, rnd
@@ -93,3 +94,29 @@ class Blockwise(DaskSuite):
 
     def time_make_blockwise_graph(self):
         self.layer._dict
+
+
+def combine(x, y, block_id):
+    return x + y
+
+
+class BlockInfoBlockwise(DaskSuite):
+    def setup(self):
+        CHUNK_SIZE = 10
+        NCHUNKS = 9000
+        SIZE = CHUNK_SIZE * NCHUNKS
+
+        base = [da.full((SIZE,), i, dtype=np.int8, chunks=CHUNK_SIZE) for i in range(4)]
+        self.base = base
+
+    def time_optimize(self):
+        base = self.base
+
+        a = base[0] + base[1]
+        b = da.map_blocks(combine, a, base[2], dtype=np.int8)
+        c = b + base[3]
+        return c
+
+    def time_compute(self):
+        c = self.time_optimize()
+        c.compute()
