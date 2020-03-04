@@ -77,3 +77,19 @@ class TestSubs(DaskSuite):
 
     def time_subs(self):
         self.arr.compute()
+
+
+class Blockwise(DaskSuite):
+    def setup(self):
+        A = 400
+        B = 800
+
+        a = da.ones((A, B, 2), chunks=1)
+        b = da.zeros((A, B, 1), chunks=1)
+        c = a + b
+        g = c.__dask_graph__()
+        layer = g.layers[c.name]
+        self.layer = layer
+
+    def time_make_blockwise_graph(self):
+        self.layer._dict
