@@ -68,6 +68,9 @@ class Slicing(DaskSuite):
     def time_slice_int_head(self):
         self.a[51].compute()
 
+    def time_slices_from_chunks(self):
+        da.core.slices_from_chunks(((2,) * 1000, (3,) * 1000, (4,) * 10))
+
 
 class TestSubs(DaskSuite):
     def setup(self):
