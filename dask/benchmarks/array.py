@@ -123,3 +123,16 @@ class BlockInfoBlockwise(DaskSuite):
     def time_compute(self):
         c = self.time_optimize()
         c.compute()
+
+
+class BlockInfoSingleton:
+
+    def setup(self):
+        a = da.from_array(np.ones((1, 1)), chunks=1)
+        b = da.from_array(np.zeros((1, 1)), chunks=1)
+        c = a + b
+        self.dsk = c.__dask_graph__()
+        self.keys = c.__dask_keys__()
+
+    def time_optimize_singleton(self):
+        da.optimize(self.dsk, self.keys)
