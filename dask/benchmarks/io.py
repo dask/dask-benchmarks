@@ -4,6 +4,7 @@ import string
 
 import numpy as np
 import pandas as pd
+import dask
 import dask.dataframe as dd
 
 from .common import DaskSuite, rnd
@@ -77,3 +78,26 @@ class HDF5(DaskSuite):
     def time_read_hdf5(self, scheduler):
         (dd.read_hdf('{}/*.hdf5'.format(self.data_dir), 'key')
            .compute(scheduler=scheduler))
+
+
+class Parquet(DaskSuite):
+
+    def setup_cache(self):
+        ts = dask.datasets.timeseries()
+        ts.to_parquet("data.parquet", engine="pyarrow")
+
+    def time_optimize_getitem(self):
+        df = dd.read_parquet("data.parquet", engine="pyarrow")
+        dask.optimize(df)
+
+    def time_read_getitem_projection(self):
+        df = dd.read_parquet("data.parquet", engine="pyarrow")
+        result = df[['x', 'y']]
+        result.compute()
+
+    def teardown_cache(self):
+        try:
+            shutil.rmtree("data.parquet")
+        except Exception as e:
+            print("ignoring exception", e)
+            pass

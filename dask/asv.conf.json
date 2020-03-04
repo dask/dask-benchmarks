@@ -58,6 +58,7 @@
         "cloudpickle": [],
         "partd": [],
         "pandas": [],
+        "pyarrow": [],
         "distributed": [],
         "s3fs": [],
         "pytables": [],
