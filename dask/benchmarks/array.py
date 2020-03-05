@@ -1,3 +1,4 @@
+import numpy as np
 from dask import array as da
 
 from .common import DaskSuite, rnd
@@ -67,6 +68,9 @@ class Slicing(DaskSuite):
     def time_slice_int_head(self):
         self.a[51].compute()
 
+    def time_slices_from_chunks(self):
+        da.core.slices_from_chunks(((2,) * 1000, (3,) * 1000, (4,) * 10))
+
 
 class TestSubs(DaskSuite):
     def setup(self):
@@ -77,3 +81,58 @@ class TestSubs(DaskSuite):
 
     def time_subs(self):
         self.arr.compute()
+
+
+class Blockwise(DaskSuite):
+    def setup(self):
+        A = 400
+        B = 800
+
+        a = da.ones((A, B, 2), chunks=1)
+        b = da.zeros((A, B, 1), chunks=1)
+        c = a + b
+        g = c.__dask_graph__()
+        layer = g.layers[c.name]
+        self.layer = layer
+
+    def time_make_blockwise_graph(self):
+        self.layer._dict
+
+
+def combine(x, y, block_id):
+    return x + y
+
+
+class BlockInfoBlockwise(DaskSuite):
+    def setup(self):
+        CHUNK_SIZE = 10
+        NCHUNKS = 9000
+        SIZE = CHUNK_SIZE * NCHUNKS
+
+        base = [da.full((SIZE,), i, dtype=np.int8, chunks=CHUNK_SIZE) for i in range(4)]
+        self.base = base
+
+    def time_optimize(self):
+        base = self.base
+
+        a = base[0] + base[1]
+        b = da.map_blocks(combine, a, base[2], dtype=np.int8)
+        c = b + base[3]
+        return c
+
+    def time_compute(self):
+        c = self.time_optimize()
+        c.compute()
+
+
+class BlockInfoSingleton:
+
+    def setup(self):
+        a = da.from_array(np.ones((1, 1)), chunks=1)
+        b = da.from_array(np.zeros((1, 1)), chunks=1)
+        c = a + b
+        self.dsk = c.__dask_graph__()
+        self.keys = c.__dask_keys__()
+
+    def time_optimize_singleton(self):
+        da.optimize(self.dsk, self.keys)
