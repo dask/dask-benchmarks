@@ -56,6 +56,7 @@ class WorkerRestrictionsSuite(object):
         self.client = client
 
     def teardown(self,resource,steal_interval):
+        self.cluster.close()
         self.client.close()
 
     def time_trivial_tasks(self,resource,steal_interval):
