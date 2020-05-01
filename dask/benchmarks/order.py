@@ -162,3 +162,17 @@ class OrderManySubgraphs(DaskSuite):
 
     def time_order_many_subgraphs(self, param):
         order(self.dsk)
+
+
+class OrderCholesky(DaskSuite):
+    def setup(self):
+        n = 50
+        A = da.random.random((n, n), chunks=(1, 1))
+        self.dsk = collections_to_dsk([da.linalg.cholesky(A)])
+        self.dsk_lower = collections_to_dsk([da.linalg.cholesky(A, lower=True)])
+
+    def time_order_cholesky(self):
+        order(self.dsk)
+
+    def time_order_cholesky_lower(self):
+        order(self.dsk_lower)
