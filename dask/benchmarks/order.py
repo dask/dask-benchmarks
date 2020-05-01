@@ -176,3 +176,28 @@ class OrderCholesky(DaskSuite):
 
     def time_order_cholesky_lower(self):
         order(self.dsk_lower)
+
+
+class OrderCholeskyMixed(DaskSuite):
+    def setup(self):
+        n = 16
+        A = da.random.random((n, n), chunks=(1, 1))
+        Bs = [A]
+        # The top-left of A is shared by all the Bs.  For example, for i=2:
+        # AAB.B
+        # AAB.B
+        # BBB.B
+        # ....B
+        # BBBBB
+        for i in range(1, n):
+            B = da.random.random((i, i), chunks=(1, 1))
+            B = da.concatenate([da.concatenate([B, A.blocks[i:, :i]]), A.blocks[:, i:]], axis=1)
+            Bs.append(B)
+        self.dsk = collections_to_dsk([da.linalg.cholesky(B) for B in Bs])
+        self.dsk_lower = collections_to_dsk([da.linalg.cholesky(B, lower=True) for B in Bs])
+
+    def time_order_cholesky_mixed(self):
+        order(self.dsk)
+
+    def time_order_cholesky_mixed_lower(self):
+        order(self.dsk_lower)
