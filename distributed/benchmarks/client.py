@@ -56,7 +56,7 @@ class WorkerRestrictionsSuite(object):
         self.client = client
 
     def teardown(self,resource,steal_interval):
-        self.cluster.close()
+        self.client.shutdown()
         self.client.close()
 
     def time_trivial_tasks(self,resource,steal_interval):
@@ -80,4 +80,3 @@ class WorkerRestrictionsSuite(object):
         steal_plug = stealing.WorkStealing(client.cluster.scheduler)
         assert steal_plug._pc.callback_time == steal_interval
         # assert len(new_worker.task_state)
-
