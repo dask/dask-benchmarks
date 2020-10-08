@@ -3,7 +3,8 @@
 import random
 
 from dask import compute, delayed
-from distributed import Client, wait
+from distributed import Client, wait, Scheduler
+from distributed.utils_test import gen_test
 
 
 class SchedulerComputeDepsInMemory(object):
@@ -35,3 +36,9 @@ class SchedulerComputeDepsInMemory(object):
         xref https://github.com/dask/distributed/pull/3293
         """
         compute(*self.x, scheduler=self.client)
+
+
+@gen_test()
+async def test_start_scheduler():
+    async with Scheduler(port=0):
+        pass
