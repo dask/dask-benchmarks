@@ -54,7 +54,7 @@ class OrderMapOverlap(DaskSuite):
 class OrderSVD(DaskSuite):
     def setup(self):
         a = da.random.random((6000, 64), chunks=(10, 64))
-        u, s, v = da.linalg.svd_compressed(a, 100, 0)
+        u, s, v = da.linalg.svd_compressed(a, 100, iterator="power", n_power_iter=0)
         self.dsk_svd = collections_to_dsk([u, s, v])
 
     def time_order_svd(self):
