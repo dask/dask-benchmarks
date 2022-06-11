@@ -10,7 +10,7 @@ steps:
 
 - script: |
     # Update to Python 3.8 (defaults to 3.7, which is too old).
-    conda install -y -c conda-forge 'python=3.8'
+    conda install -y -c conda-forge 'python=3.8' pip
   displayName: 'Install Python 3.8'
 
 - script: |
