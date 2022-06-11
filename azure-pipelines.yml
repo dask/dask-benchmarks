@@ -9,11 +9,18 @@ steps:
   displayName: Add conda to PATH
 
 - script: |
+    # Update all installed packages
+    conda update -y -c conda-forge --all
+  displayName: 'Update Conda'
+
+- script: |
+    # Switch to Python 3.8 (defaults to 3.7, which is too old).
+    conda install -y -c conda-forge 'python=3.8' pip
+  displayName: 'Install Python 3.8'
+
+- script: |
     # Installing dev version of asv to use new --strict option
-    # TODO: switch back to installing from conda-forge once there is a
-    # new asv release beyond version 0.4.1
-    pip install git+https://github.com/airspeed-velocity/asv.git
-    # conda install -y -c conda-forge asv
+    conda install -y -c conda-forge 'asv>=0.5'
   displayName: 'Install ASV'
 
 - script: |
