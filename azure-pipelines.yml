@@ -9,6 +9,11 @@ steps:
   displayName: Add conda to PATH
 
 - script: |
+    # Update to Python 3.8 (defaults to 3.7, which is too old).
+    conda install -y -c conda-forge 'python=3.8'
+  displayName: 'Install ASV'
+
+- script: |
     # Installing dev version of asv to use new --strict option
     conda install -y -c conda-forge 'asv>=0.5'
   displayName: 'Install ASV'
