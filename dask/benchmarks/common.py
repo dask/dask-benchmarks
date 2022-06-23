@@ -1,5 +1,3 @@
-
-import time
 import timeit
 
 import numpy as np
@@ -9,7 +7,7 @@ def rnd():
     return np.random.RandomState(42)
 
 
-class DaskSuite(object):
+class DaskSuite:
 
     goal_time = 2.0
 

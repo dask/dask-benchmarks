@@ -1,17 +1,17 @@
-import pandas as pd
-import numpy as np
-from dask.base import tokenize
 from distutils.version import LooseVersion
 
-from .common import DaskSuite, rnd
+import numpy as np
+import pandas as pd
+
+from dask.base import tokenize
+
+from benchmarks.common import DaskSuite, rnd
 
 
 class TokenizeBuiltins(DaskSuite):
     def setup(self):
         N = 10000
-        self.obj = {
-            i: ("tuple", ["list", i], {"set", i}, i) for i in range(N)
-        }
+        self.obj = {i: ("tuple", ["list", i], {"set", i}, i) for i in range(N)}
 
     def time_tokenize(self):
         tokenize(self.obj)
@@ -65,13 +65,7 @@ class TokenizePandas(DaskSuite):
 
 
 class TokenizeNumpy(DaskSuite):
-    params = [
-        "int",
-        "float",
-        "str",
-        "bytes",
-        "object"
-    ]
+    params = ["int", "float", "str", "bytes", "object"]
     param_names = ["dtype"]
 
     def setup(self, dtype):
@@ -83,8 +77,16 @@ class TokenizeNumpy(DaskSuite):
         elif dtype in ("str", "bytes"):
             obj = rnd().choice(
                 [
-                    "Leslie", "Ben", "Jerry", "Andy", "April", "Tom", "Ann",
-                    "Chris", "Donna", "Ron"
+                    "Leslie",
+                    "Ben",
+                    "Jerry",
+                    "Andy",
+                    "April",
+                    "Tom",
+                    "Ann",
+                    "Chris",
+                    "Donna",
+                    "Ron",
                 ],
                 N,
             )

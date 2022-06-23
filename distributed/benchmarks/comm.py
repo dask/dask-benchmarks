@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-from functools import partial
 import os
+from functools import partial
 
 from tornado import gen
 from tornado.ioloop import IOLoop
@@ -10,6 +9,7 @@ from distributed.comm import connect, listen
 
 def to_serialized(obj):
     from distributed.protocol import Serialized, serialize
+
     return Serialized(*serialize(obj))
 
 
@@ -33,7 +33,7 @@ def run_sync(loop, func):
     return future_cell[0].result()
 
 
-class LoopOverhead(object):
+class LoopOverhead:
     """
     These are not distributed benchmarks per se, but help assessing
     Tornado's loop management overhead for other benchmarks.
@@ -55,10 +55,11 @@ class LoopOverhead(object):
         run_sync(self.loop, self._empty_coro)
 
 
-class Connect(object):
+class Connect:
     """
     Test overhead of connect() and Comm.close().
     """
+
     N_CONNECTS = 100
 
     def setup(self):
@@ -78,48 +79,55 @@ class Connect(object):
     def _main(self, address):
         listener = listen(address, self._handle_comm)
         yield listener.start()
-        yield [self._connect_close(listener.contact_address)
-               for i in range(self.N_CONNECTS)]
+        yield [
+            self._connect_close(listener.contact_address)
+            for i in range(self.N_CONNECTS)
+        ]
         listener.stop()
 
     def _time_connect(self, address):
         run_sync(self.loop, partial(self._main, address))
 
     def time_tcp_connect(self):
-        self._time_connect('tcp://127.0.0.1')
+        self._time_connect("tcp://127.0.0.1")
 
     def time_inproc_connect(self):
-        self._time_connect('inproc://')
+        self._time_connect("inproc://")
 
 
-class Transfer(object):
+class Transfer:
     """
     Test speed of transfering objects on established comms.
     """
+
     N_SMALL_TRANSFERS = 100
     N_LARGE_TRANSFERS = 100
 
     _LARGE = 10 * 1024 * 1024
     _LARGE_UNCOMPRESSIBLE = os.urandom(_LARGE // 10) * 10
 
-    MSG_SMALL = {'op': 'update',
-                 'x': [123, 456],
-                 'data': b'foo',
-                 }
+    MSG_SMALL = {
+        "op": "update",
+        "x": [123, 456],
+        "data": b"foo",
+    }
     # Since this is compressible, it might stress compression instead of
     # actual transmission cost
-    MSG_LARGE = {'op': 'update',
-                 'x': [123, 456],
-                 'data': b'z' * _LARGE,
-                 }
-    MSG_LARGE_UNCOMPRESSIBLE = {'op': 'update',
-                                'x': [123, 456],
-                                'data': _LARGE_UNCOMPRESSIBLE,
-                                }
-    MSG_LARGE_SERIALIZED = {'op': 'update',
-                            'x': [123, 456],
-                            'data': to_serialized(_LARGE_UNCOMPRESSIBLE),
-                            }
+    MSG_LARGE = {
+        "op": "update",
+        "x": [123, 456],
+        "data": b"z" * _LARGE,
+    }
+    MSG_LARGE_UNCOMPRESSIBLE = {
+        "op": "update",
+        "x": [123, 456],
+        "data": _LARGE_UNCOMPRESSIBLE,
+    }
+    MSG_LARGE_SERIALIZED = {
+        "op": "update",
+        "x": [123, 456],
+        "data": to_serialized(_LARGE_UNCOMPRESSIBLE),
+    }
 
     def setup(self):
         self.loop = IOLoop()
@@ -146,40 +154,54 @@ class Transfer(object):
         listener.stop()
 
     def _time_small(self, address):
-        run_sync(self.loop,
-                 partial(self._main, address, self.MSG_SMALL, self.N_SMALL_TRANSFERS))
+        run_sync(
+            self.loop,
+            partial(self._main, address, self.MSG_SMALL, self.N_SMALL_TRANSFERS),
+        )
 
     def _time_large(self, address):
-        run_sync(self.loop,
-                 partial(self._main, address, self.MSG_LARGE, self.N_LARGE_TRANSFERS))
+        run_sync(
+            self.loop,
+            partial(self._main, address, self.MSG_LARGE, self.N_LARGE_TRANSFERS),
+        )
 
     def _time_large_uncompressible(self, address):
-        run_sync(self.loop,
-                 partial(self._main, address,
-                         self.MSG_LARGE_UNCOMPRESSIBLE, self.N_LARGE_TRANSFERS,
-                         ))
+        run_sync(
+            self.loop,
+            partial(
+                self._main,
+                address,
+                self.MSG_LARGE_UNCOMPRESSIBLE,
+                self.N_LARGE_TRANSFERS,
+            ),
+        )
 
     def _time_large_no_deserialize(self, address):
-        run_sync(self.loop,
-                 partial(self._main, address,
-                         self.MSG_LARGE_SERIALIZED, self.N_LARGE_TRANSFERS,
-                         deserialize=False,
-                         ))
+        run_sync(
+            self.loop,
+            partial(
+                self._main,
+                address,
+                self.MSG_LARGE_SERIALIZED,
+                self.N_LARGE_TRANSFERS,
+                deserialize=False,
+            ),
+        )
 
     def time_tcp_small_transfers(self):
-        self._time_small('tcp://127.0.0.1')
+        self._time_small("tcp://127.0.0.1")
 
     def time_tcp_large_transfers(self):
-        self._time_large('tcp://127.0.0.1')
+        self._time_large("tcp://127.0.0.1")
 
     def time_tcp_large_transfers_uncompressible(self):
-        self._time_large_uncompressible('tcp://127.0.0.1')
+        self._time_large_uncompressible("tcp://127.0.0.1")
 
     def time_tcp_large_transfers_no_serialize(self):
-        self._time_large_no_deserialize('tcp://127.0.0.1')
+        self._time_large_no_deserialize("tcp://127.0.0.1")
 
     def time_inproc_small_transfers(self):
-        self._time_small('inproc://')
+        self._time_small("inproc://")
 
     def time_inproc_large_transfers(self):
-        self._time_large('inproc://')
+        self._time_large("inproc://")

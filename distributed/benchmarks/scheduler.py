@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-
 import random
 
 from dask import compute, delayed
 from distributed import Client, wait
 
 
-class SchedulerComputeDepsInMemory(object):
-
+class SchedulerComputeDepsInMemory:
     def setup(self):
         self.client = Client()
 

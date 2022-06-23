@@ -1,7 +1,8 @@
 import numpy as np
-from dask import array as da
 
-from .common import DaskSuite, rnd
+import dask.array as da
+
+from benchmarks.common import DaskSuite, rnd
 
 
 class Rechunk(DaskSuite):
@@ -37,11 +38,9 @@ class Rechunk(DaskSuite):
 
 
 class FancyIndexing(DaskSuite):
-
     def setup(self):
         r = rnd()
-        self.a = da.empty(shape=(2000000, 200, 2), dtype='i1',
-                          chunks=(10000, 100, 2))
+        self.a = da.empty(shape=(2000000, 200, 2), dtype="i1", chunks=(10000, 100, 2))
         self.c = r.randint(0, 2, size=self.a.shape[0], dtype=bool)
         self.s = sorted(r.choice(self.a.shape[1], size=100, replace=False))
 
@@ -50,11 +49,9 @@ class FancyIndexing(DaskSuite):
 
 
 class Slicing(DaskSuite):
-
     def setup(self):
         self.N = 100000
-        self.a = da.empty(shape=(self.N,), dtype='i1',
-                          chunks=[1] * self.N)
+        self.a = da.empty(shape=(self.N,), dtype="i1", chunks=[1] * self.N)
 
     def time_slice_slice_head(self):
         self.a[slice(10, 51, None)].compute()
@@ -75,9 +72,14 @@ class Slicing(DaskSuite):
 class TestSubs(DaskSuite):
     def setup(self):
         x = da.ones((50, 50), chunks=(10, 10))
-        self.arr = (x.reshape(-1, 1).rechunk(50, 2)
-                     .reshape(50, 50).rechunk(25, 25)
-                     .reshape(1, -1) .reshape(50, 50))
+        self.arr = (
+            x.reshape(-1, 1)
+            .rechunk(50, 2)
+            .reshape(50, 50)
+            .rechunk(25, 25)
+            .reshape(1, -1)
+            .reshape(50, 50)
+        )
 
     def time_subs(self):
         self.arr.compute()
@@ -126,7 +128,6 @@ class BlockInfoBlockwise(DaskSuite):
 
 
 class BlockInfoSingleton:
-
     def setup(self):
         a = da.from_array(np.ones((1, 1)), chunks=1)
         b = da.from_array(np.zeros((1, 1)), chunks=1)
