@@ -2,8 +2,9 @@
 import lz4  # noqa: F401
 import numpy as np
 
-from dask.benchmarks.common import rnd
 from distributed import protocol
+
+from benchmarks.common import rnd
 
 messages = {}
 
