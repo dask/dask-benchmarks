@@ -1,7 +1,8 @@
-from dask import array as da
+import dask.array as da
 from dask.base import collections_to_dsk
 from dask.order import order
-from .common import DaskSuite
+
+from benchmarks.common import DaskSuite
 
 
 def f(*args):
@@ -9,7 +10,7 @@ def f(*args):
 
 
 def fully_connected_layers(width, height):
-    """ Create a (very artificial) DAG of given dimensions.
+    """Create a (very artificial) DAG of given dimensions.
 
     Each layer is fully connected to the previous layer.
     """
@@ -36,10 +37,12 @@ def create_disconnected_subgraphs(num_groups, width, height):
 
 
 class OrderMapOverlap(DaskSuite):
-    params = [[
-        ((1e4, 1e4), (200, 200), 1),
-        ((1000, 1000, 1000), (100, 100, 100), 10),
-    ]]
+    params = [
+        [
+            ((1e4, 1e4), (200, 200), 1),
+            ((1000, 1000, 1000), (100, 100, 100), 10),
+        ]
+    ]
 
     def setup(self, param):
         size, chunks, depth = param
@@ -90,15 +93,17 @@ class OrderLinalgSolves(DaskSuite):
 
 
 class OrderFullLayers(DaskSuite):
-    params = [[
-        (1, 50000),
-        (2, 10000),
-        (10, 1000),
-        (100, 20),
-        (500, 2),
-        (9999, 1),
-        (50000, 1),
-    ]]
+    params = [
+        [
+            (1, 50000),
+            (2, 10000),
+            (10, 1000),
+            (100, 20),
+            (500, 2),
+            (9999, 1),
+            (50000, 1),
+        ]
+    ]
 
     def setup(self, param):
         width, height = param
@@ -109,10 +114,12 @@ class OrderFullLayers(DaskSuite):
 
 
 class OrderLinearWithDanglers(DaskSuite):
-    params = [[
-        (2, 10000),
-        (5, 5000),
-    ]]
+    params = [
+        [
+            (2, 10000),
+            (5, 5000),
+        ]
+    ]
 
     def setup(self, param):
         width, height = param
@@ -147,14 +154,17 @@ class OrderLinearFull(DaskSuite):
 
 class OrderManySubgraphs(DaskSuite):
     """This tests behavior when there are few or many disconnected subgraphs"""
-    params = [[
-        (1, 9999),
-        (3, 3333),
-        (10, 999),
-        (30, 303),
-        (100, 99),
-        (999, 10),
-    ]]
+
+    params = [
+        [
+            (1, 9999),
+            (3, 3333),
+            (10, 999),
+            (30, 303),
+            (100, 99),
+            (999, 10),
+        ]
+    ]
 
     def setup(self, param):
         num_subgraphs, width = param
@@ -191,10 +201,14 @@ class OrderCholeskyMixed(DaskSuite):
         # BBBBB
         for i in range(1, n):
             B = da.random.random((i, i), chunks=(1, 1))
-            B = da.concatenate([da.concatenate([B, A.blocks[i:, :i]]), A.blocks[:, i:]], axis=1)
+            B = da.concatenate(
+                [da.concatenate([B, A.blocks[i:, :i]]), A.blocks[:, i:]], axis=1
+            )
             Bs.append(B)
         self.dsk = collections_to_dsk([da.linalg.cholesky(B) for B in Bs])
-        self.dsk_lower = collections_to_dsk([da.linalg.cholesky(B, lower=True) for B in Bs])
+        self.dsk_lower = collections_to_dsk(
+            [da.linalg.cholesky(B, lower=True) for B in Bs]
+        )
 
     def time_order_cholesky_mixed(self):
         order(self.dsk)

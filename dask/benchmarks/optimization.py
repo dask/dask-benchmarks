@@ -1,7 +1,7 @@
 from dask.core import get_dependencies
 from dask.optimization import cull, fuse, inline, inline_functions
 
-from .common import DaskSuite
+from benchmarks.common import DaskSuite
 
 
 def inc(x):
@@ -32,8 +32,7 @@ class Cull(DaskSuite):
 
 
 class Fuse(DaskSuite):
-    params = ["diamond",
-              "linear"]
+    params = ["diamond", "linear"]
 
     def setup(self, kind):
         dsk, keys, kwargs = getattr(self, "setup_" + kind)()
@@ -68,14 +67,16 @@ class Fuse(DaskSuite):
                 # Start of a diamond
                 update = {
                     ("add", r, c, w): (add, (x, r - 1, c), w)
-                    for w in range(width) for c in range(cols)
+                    for w in range(width)
+                    for c in range(cols)
                 }
                 x = "add"
             elif r % (height + 1):
                 # In a diamond
                 update = {
                     ("inc", r, c, w): (inc, (x, r - 1, c, w))
-                    for w in range(width) for c in range(cols)
+                    for w in range(width)
+                    for c in range(cols)
                 }
                 x = "inc"
             else:
@@ -109,14 +110,16 @@ class Inline(DaskSuite):
                 # Start of a diamond
                 update = {
                     ("add", r, c, w): (add, (x, r - 1, c), w)
-                    for w in range(width) for c in range(cols)
+                    for w in range(width)
+                    for c in range(cols)
                 }
                 x = "add"
             elif r % (height + 1):
                 # In a diamond
                 update = {
                     ("inc", r, c, w): (inc, (x, r - 1, c, w))
-                    for w in range(width) for c in range(cols)
+                    for w in range(width)
+                    for c in range(cols)
                 }
                 inline_keys.update(update)
                 x = "inc"
