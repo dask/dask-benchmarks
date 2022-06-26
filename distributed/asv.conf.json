@@ -11,11 +11,11 @@
 
     // The URL or local path of the source code repository for the
     // project being benchmarked
-    "repo": "https://github.com/crusaderky/distributed",
+    "repo": "https://github.com/dask/distributed",
 
     // List of branches to benchmark. If not provided, defaults to "main"
     // (for git) or "default" (for mercurial).
-    "branches": ["WSMR/pickle", "staging"], // for git
+    "branches": ["main"], // for git
     // "branches": ["default"],    // for mercurial
 
     // The DVCS being used.  If not set, it will be automatically

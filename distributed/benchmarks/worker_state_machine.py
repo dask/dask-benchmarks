@@ -102,12 +102,7 @@ class EnsureCommunicatingNoop(_EnsureCommunicating):
 
     def setup(self, n_workers, n_tasks):
         super().setup(n_workers, n_tasks)
-        self.ws.handle_stimulus(
-            self.acquire_replicas,
-            # FIXME this is only for compatibility with main
-            UnpauseEvent(stimulus_id="work-around-EnsureCommunicatingAfterTransitions"),
-            PauseEvent(stimulus_id="pause"),
-        )
+        self.ws.handle_stimulus(self.acquire_replicas)
         self.ws.validate_state()
 
     def time_noop(self, n_workers, n_tasks):
@@ -122,11 +117,7 @@ class EnsureCommunicatingOneWorker(_EnsureCommunicating):
 
     def setup(self, n_workers, n_tasks):
         super().setup(n_workers, n_tasks)
-        instructions = self.ws.handle_stimulus(
-            self.acquire_replicas,
-            # FIXME this is only for compatibility with main
-            UnpauseEvent(stimulus_id="work-around-EnsureCommunicatingAfterTransitions"),
-        )
+        instructions = self.ws.handle_stimulus(self.acquire_replicas)
         instr = next(i for i in instructions if isinstance(i, GatherDep))
         # Don't meter the transitions to memory
         instructions = self.ws.handle_stimulus(
