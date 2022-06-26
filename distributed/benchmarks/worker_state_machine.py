@@ -1,4 +1,3 @@
-import pickle
 import random
 
 from distributed.worker_state_machine import (
@@ -62,17 +61,13 @@ class PopulateDataNeeded(_EnsureCommunicating):
         super().setup(n_workers, n_tasks)
         self.ws.handle_stimulus(PauseEvent(stimulus_id="pause"))
         self.ws.validate_state()
-        self.ws_pik = pickle.dumps(self.ws)
-
-    def time_unpickle(self, n_workers, n_tasks):
-        pickle.loads(self.ws_pik)
 
     def time_populate_data_needed(self, n_workers, n_tasks):
-        ws = pickle.loads(self.ws_pik)
-        assert not ws.tasks
-        instructions = ws.handle_stimulus(self.acquire_replicas)
+        # FIXME this breaks if you run asv without the --quick flag
+        assert not self.ws.tasks
+        instructions = self.ws.handle_stimulus(self.acquire_replicas)
         self.assert_instructions(instructions, 0, 0)
-        assert not ws.in_flight_workers
+        assert not self.ws.in_flight_workers
 
 
 class EnsureCommunicatingFromIdle(_EnsureCommunicating):
@@ -85,15 +80,11 @@ class EnsureCommunicatingFromIdle(_EnsureCommunicating):
             self.acquire_replicas,
         )
         self.ws.validate_state()
-        self.ws_pik = pickle.dumps(self.ws)
-
-    def time_unpickle(self, n_workers, n_tasks):
-        pickle.loads(self.ws_pik)
 
     def time_from_idle(self, n_workers, n_tasks):
-        ws = pickle.loads(self.ws_pik)
-        assert not ws.in_flight_workers
-        instructions = ws.handle_stimulus(UnpauseEvent(stimulus_id="unpause"))
+        # FIXME this breaks if you run asv without the --quick flag
+        assert not self.ws.in_flight_workers
+        instructions = self.ws.handle_stimulus(UnpauseEvent(stimulus_id="unpause"))
         self.assert_instructions(instructions, 1, min(n_workers, 50))
 
 
@@ -131,12 +122,11 @@ class EnsureCommunicatingOneWorker(_EnsureCommunicating):
         )
         self.assert_instructions(instructions, 0, 0)
         self.ws.validate_state()
-        self.ws_pik = pickle.dumps(self.ws)
-
-    def time_unpickle(self, n_workers, n_tasks):
-        pickle.loads(self.ws_pik)
+        self.already_ran = False
 
     def time_one_worker(self, n_workers, n_tasks):
-        ws = pickle.loads(self.ws_pik)
-        instructions = ws.handle_stimulus(UnpauseEvent(stimulus_id="unpause2"))
+        # FIXME this breaks if you run asv without the --quick flag
+        assert not self.already_ran
+        self.already_ran = True
+        instructions = self.ws.handle_stimulus(UnpauseEvent(stimulus_id="unpause2"))
         self.assert_instructions(instructions, 0 if n_tasks < n_workers * 5 else 1, 1)
