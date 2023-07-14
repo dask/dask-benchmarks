@@ -59,6 +59,7 @@
         "partd": [],
         "pandas": [],
         "distributed": [],
+        "pytest": [],
         "s3fs": [],
         "lz4": []
     },
